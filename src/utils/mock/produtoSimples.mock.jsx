@@ -1,10 +1,8 @@
 // GET: /produto/{ categoria }/simples
 
-export function produtosSimples() {
-    return{
-        id: 111,
-        categoria: 'Arquitetura',
-        nome: 'Nome Arquitetura',
-        arquivoImg: 'link img 1',
-    }
+export const produtosSimples = {
+    id: 111,
+    categoria: 'Arquitetura',
+    nome: 'Nome Arquitetura',
+    arquivoImg: 'link img 1',
 }
