@@ -1,7 +1,7 @@
 // GET: /produto/arquitetura?id={ idDoProduto }
 // POST: /produto/arquitetura
 
-export const produtoArquitetura = {
+export const produtoArquitetura = [{
     id: 111,
     categoria: 'Arquitetura',
     nome: 'Nome Arquitetura',
@@ -38,4 +38,4 @@ export const produtoArquitetura = {
     ],
     arquivodDoc: [],
     arquivodPdf: [],
-}
+}]

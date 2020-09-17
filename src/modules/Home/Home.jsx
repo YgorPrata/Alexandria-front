@@ -1,29 +1,25 @@
 import React, { Component } from 'react'
 
-import { produtoArquitetura } from '../../utils/mock/_index'
-import  {api}  from '../../utils/api/api'
+import { arquitetura }  from '../../utils/services/Produtos.service'
 
 export default class Home extends Component{
     state = {
-        artigos: {},
+        arquiteturas: {},
     }
 
-    async componentDidMount() {
-        const response = await api.get() + 'produtos/artigos';
-
-        this.setState({ artigos: response.data });
+    componentDidMount() {
+        arquitetura.then((response) => {
+            this.setState({ arquiteturas: response })
+        })
     }
 
     render(){        
-        const { artigos } = this.state;
+        const { arquiteturas } = this.state;
 
         return(
             <div>
                 Home
-                        
-                {console.log(produtoArquitetura)}
-                {console.log(artigos)}
-                
+                {console.log('teste', arquiteturas)}
             </div>
         )
     }
