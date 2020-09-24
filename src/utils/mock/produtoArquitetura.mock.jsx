@@ -28,13 +28,12 @@ export const produtoArquitetura = [{
         'palavra 2',
     ],
     arquivoImg: [
-        {
-            link: 'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
-            descricao: 'loren cacildis text xet aut let'
-        },{
-            link: 'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
-            descricao: 'loren cacildis text xet aut let'
-        }
+        'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
+        'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
+    ],
+    arquivoPDF: [
+        'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
+        'https://media.giphy.com/media/tJqyalvo9ahykfykAj/giphy.gif',
     ],
     arquivodDoc: [],
     arquivodPdf: [],
