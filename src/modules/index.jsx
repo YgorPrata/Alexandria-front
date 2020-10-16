@@ -1,23 +1,32 @@
 import React, { Fragment } from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
-import history from '../history'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom"
 
-import { Header, Footer }  from '../components/index'
+// import { Header, Footer }  from '../components/index'
+import Footer from '../components/Footer/Footer'
+import Header from '../components/Header/Header'
 import Home from './Home/Home'
 import Arquitetura from './Arquitetura/Arquitetura'
+import CadastroArquitetura from './Arquitetura/CadastroArquitetura/CadastroArquitetura'
+import LinhaDoTempo from './LinhaDoTempo/LinhaDoTempo'
 
 export const App = () => (
   <Fragment>
-    <Header />
-    <Home />
-    <Arquitetura />
-
-    {/* <Router history={history}>
+    <Router>
+      <Header />
       <Switch>
-      <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
+          <div className="container">
+            <Route path="/arquitetura" component={Arquitetura} />
+            <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
+            <Route path="/linha-do-tempo" component={LinhaDoTempo} />
+          </div>
       </Switch>
-    </Router> */}
-    <Footer />
+      <Footer />
+    </Router>
   </Fragment>
 );
 
