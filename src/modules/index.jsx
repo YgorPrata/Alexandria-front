@@ -17,13 +17,15 @@ export const App = () => (
   <Fragment>
     <Router>
       <Header />
+      <span className="header-spancing"></span>
+
       <Switch>
         <Route exact path="/" component={Home} />
-          <div className="container">
-            <Route path="/arquitetura" component={Arquitetura} />
-            <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
-            <Route path="/linha-do-tempo" component={LinhaDoTempo} />
-          </div>
+        <Route path="/arquitetura" component={Arquitetura} />
+        <div className="container">
+          <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
+          <Route path="/linha-do-tempo" component={LinhaDoTempo} />
+        </div>
       </Switch>
       <Footer />
     </Router>

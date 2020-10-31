@@ -1,159 +1,323 @@
 import React, { Component } from 'react'
-import { Banner, Search } from './Home.styled'
+import MaterialIcon from 'material-icons-react'
+
+import { 
+  Banner,
+  SearchTitle, 
+  BannerEnd, 
+  BannerEndTitle,
+  Novidade, 
+  Card, 
+  NovidadeTitle, 
+  Categoria, 
+  CategoriaTitle, 
+  ImgNovidade, 
+  BoxNovidadeInfo, 
+  CategoriaBox, 
+  BoxNovidadeTitle,
+  ButtonSearch,
+  WrapperSearch,
+  WrapperSearchImg,
+  WrapperCategoria,
+  SearchItem,
+  CategoriaDescription } from './Home.styled'
+
+  
+import { Link } from "react-router-dom"
+
 import FormControl from 'react-bootstrap/FormControl'
 import InputGroup from 'react-bootstrap/InputGroup'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 
-// import FourKIcon from '@material-ui/icons/FourK'
-// import { makeStyles } from '@material-ui/core/styles'
+import { getProdutoSimples } from '../../utils/services/produtoSimples.service'
+
 
 const initialState = {
-  typeSearch: 'Tipo',
-  placeholderTipo: 'Encontre Arquitetura, Artes, livros ...',
-  placeholderCategoria: '',
-  categoria: 'Categoria'
+  produtoSimples: '',
+  searchValue: '',
+  categoria: '',
+  tipo: '',
+  typeSearch: 'tipo',
+  categoriaSearch: 'categoria',
+  activeSearch: false,
+  disableButton: true,
+  seachNotFound: false,
 }
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//     color: theme.palette.text.primary,
-//     },
-// }));
 
 export default class Home extends Component {
   state = { ...initialState }
+
+  // componentDidMount() {
+  //   this.setState({ produtoSimples: })
+  // }
 
   constructor(props) {
     super(props)
 
     this.setTypeSearch = this.setTypeSearch.bind(this)
+    this.setCategoriaSearch = this.setCategoriaSearch.bind(this)
   }
 
-  setTypeSearch(typeSearch) {
-    var type
-    var placeholder
-
-    if (typeSearch == 'Nome') {
-      type = typeSearch
-      placeholder = 'Pesquise um nome ...'
-    }
-    if (typeSearch == 'Autor') {
-      type = typeSearch
-      placeholder = 'Pesquise um Autor ...'
-    }
-    if (typeSearch == 'Ano') {
-      type = typeSearch
-      placeholder = 'Pesquise um Ano ...'
-    }
-    if (typeSearch == 'Tudo') {
-      type = 'Tipo'
-      placeholder = 'Encontre Arquitetura, Artes, livros ...'
-    }
-
-    this.setState({
-      typeSearch: type,
-      placeholderTipo: placeholder
+  searchProduct(value, tipo, categoria, limite){ 
+    getProdutoSimples(value, tipo, categoria, limite).then((response) => {
+      typeof response === 'object' ? (
+        this.setState({ 
+          produtoSimples: response, 
+          activeSearch: true,
+          seachNotFound: false 
+        })
+      ) : (
+        this.setState({ 
+          produtoSimples: '',
+          activeSearch: false,
+          seachNotFound: true  
+        })
+      )
+    })
+  }
+  
+  getInputValue(value){
+    this.setState({ 
+      searchValue: value,
+      disableButton: value.length > 2 ? false : true
     })
   }
 
-  setCategoria(categoria) {
-    var categ
-    var placeholder
-
-    if (categoria == 'Arquitetura') {
-      categ = categoria
-      placeholder = 'Pesquise um nome ...'
-    }
-    if (categoria == 'Arte') {
-      categ = categoria
-      placeholder = 'Pesquise um Autor ...'
-    }
-    if (categoria == 'Livro') {
-      categ = categoria
-      placeholder = 'Pesquise um Ano ...'
-    }
-    if (categoria == 'Tudo') {
-      categ = 'Categoria'
-      placeholder = 'Encontre Arquitetura, Artes, livros ...'
-    }
-
+  setTypeSearch(typeSearch) {
     this.setState({
-      categoria: categ,
-      placeholderCategoria: placeholder
+      typeSearch: typeSearch,
+    })
+  }
+
+  setCategoriaSearch(categoriaSearch) {
+    this.setState({
+      categoriaSearch: categoriaSearch,
     })
   }
 
   render() {
-    // const styleIcon = useStyles()
+    const { 
+      produtoSimples, 
+      searchValue,
+      typeSearch,
+      categoriaSearch, 
+      activeSearch,
+      disableButton,
+      seachNotFound } = this.state;
 
     return (
-      <Banner>
-        <Search className="container">
-          <p>Encontre entre "x" itens</p>
-          <InputGroup>
-            <FormControl
-              placeholder={this.state.placeholderTipo + this.state.placeholderCategoria}
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
+      <div>
+        <Banner>
+          <div className="container">
+            <SearchTitle>Encontre entre <span>20.000</span> itens de material inestimável para humanidade</SearchTitle>
+            <InputGroup>
+              <FormControl
+                placeholder="arquitetura, artes, literaturas ..."
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                onChange={ () => this.getInputValue(event.target.value) }
+              />
 
-            <DropdownButton id="dropdown-item-button" title={this.state.typeSearch} as={InputGroup.Append}>
-              <Dropdown.ItemText>Filtrar por:</Dropdown.ItemText>
-              <Dropdown.Divider />
-              <Dropdown.Item
-                as="button"
-                value="Nome"
-                onClick={() => this.setTypeSearch(event.target.value)}>
-                Nome</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Autor"
-                onClick={() => this.setTypeSearch(event.target.value)}>
-                Autor</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Ano"
-                onClick={() => this.setTypeSearch(event.target.value)}>
-                Ano</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Tudo"
-                onClick={() => this.setTypeSearch(event.target.value)}>
-                Tudo</Dropdown.Item>
-            </DropdownButton>
+              <DropdownButton id="dropdown-item-button" title={typeSearch} as={InputGroup.Append}>
+                <Dropdown.ItemText>Filtrar por:</Dropdown.ItemText>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  as="button"
+                  value="titulo"
+                  id="titulo"
+                  onClick={() => this.setTypeSearch(event.target.value)}>
+                  titulo</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="autor"
+                  onClick={() => this.setTypeSearch(event.target.value)}>
+                  autor</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="localidade"
+                  onClick={() => this.setTypeSearch(event.target.value)}>
+                  localidade</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="tudo"
+                  onClick={() => this.setTypeSearch(event.target.value)}>
+                  tudo</Dropdown.Item>
+              </DropdownButton>
 
-            <DropdownButton id="dropdown-item-button" title={this.state.categoria} as={InputGroup.Append}>
-              <Dropdown.ItemText>Filtrar por:</Dropdown.ItemText>
-              <Dropdown.Divider />
-              <Dropdown.Item
-                as="button"
-                value="Arquitetura"
-                onClick={() => this.setCategoria(event.target.value)}>
-                Arquitetura</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Arte"
-                onClick={() => this.setCategoria(event.target.value)}>
-                Arte</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Livro"
-                onClick={() => this.setCategoria(event.target.value)}>
-                Livro</Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                value="Tudo"
-                onClick={() => this.setCategoria(event.target.value)}>
-                Tudo</Dropdown.Item>
-            </DropdownButton>
+              <DropdownButton id="dropdown-item-button" title={categoriaSearch} as={InputGroup.Append}>
+                <Dropdown.ItemText>Filtrar por:</Dropdown.ItemText>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  as="button"
+                  value="arquitetura"
+                  onClick={() => this.setCategoriaSearch(event.target.value)}>
+                  arquitetura</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="arte"
+                  onClick={() => this.setCategoriaSearch(event.target.value)}>
+                  arte</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="livro"
+                  onClick={() => this.setCategoriaSearch(event.target.value)}>
+                  livro</Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  value="tudo"
+                  onClick={() => this.setCategoriaSearch(event.target.value)}>
+                  tudo</Dropdown.Item>
+              </DropdownButton>
 
-            <Button type="submit">Pesquisa</Button>
-          </InputGroup>
+              <ButtonSearch>
+                <Button 
+                  type="button" 
+                  disabled={ disableButton } 
+                  onClick={() => this.searchProduct(searchValue, typeSearch, categoriaSearch, 3)}>
+                  <MaterialIcon icon="search" size={21} color="#fff" />
+                </Button>
+              </ButtonSearch>
+            </InputGroup>
 
-        </Search>
-      </Banner>
+            <WrapperSearch className="box-scroll-bar">
+              {
+                activeSearch && ( produtoSimples.map(produto => 
+
+                  <Link key={ produto.id_prod } to={{
+                    pathname: "/arquitetura",
+                    paramsProduct: {
+                      id: produto.id_prod,
+                      categoria: produto.categoria,
+                    }
+                  }}>
+                    <SearchItem>
+
+                      <WrapperSearchImg>
+                        <img src={`${process.env.PUBLIC_URL + produto.img.path_img}`} />
+                      </WrapperSearchImg>
+
+                      <div>
+                        <div>{ produto.titulo }</div>
+                        <div>{ produto.autor }</div>
+                      </div>
+                      <WrapperCategoria categoria={ produto.categoria }>
+                        <span>{ produto.categoria }</span>
+
+                        {
+                          produto.categoria == "arquitetura" &&
+                          <MaterialIcon icon="apartment" size={20} color="#37e29b" />
+                        }{
+                          produto.categoria == "livro" &&
+                          <MaterialIcon icon="chrome_reader_mode" size={20} color="#e24f37" />
+                        }{
+                          produto.categoria == "arte" &&
+                          <MaterialIcon icon="widgets" size={20} color="#37d2e2" />
+                        }
+                      </WrapperCategoria>
+                    </SearchItem>
+                  </Link>
+                ))
+              }
+              {
+                seachNotFound && (
+                  <SearchItem>
+                    Não escontramos nenhum item para sua busca :/
+                  </SearchItem>
+                )
+              }
+
+            </WrapperSearch>
+
+          </div>
+        </Banner>
+
+        <Novidade>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <NovidadeTitle>Novidades por aqui</NovidadeTitle>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <Card>
+                      <ImgNovidade>
+                        <img src={`${process.env.PUBLIC_URL}/assets/images/11.jpg`} alt=""/>
+                      </ImgNovidade>
+                      <BoxNovidadeInfo>
+                        <BoxNovidadeTitle>Museu do Amanhã</BoxNovidadeTitle>
+                        <div>2017</div>
+                        <div>Santiago Calatrava</div>
+                      </BoxNovidadeInfo>
+
+                    </Card>
+                  </div>
+                  <div className="col-md-6">
+                    <Card>blá blá</Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Novidade>
+
+        <Categoria>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <CategoriaTitle>Pricipais categorias</CategoriaTitle>
+
+                <div className="row">
+                  <div className="col-md-4">
+                    <Card>
+                      <CategoriaBox>
+                        <MaterialIcon icon="apartment" size={37} color="#ff3366" />
+                        <h4>Arquitetura</h4>
+                        <CategoriaDescription>morumentos históricos, museus, grandes contruções, prédios modernos e obras primas arquitetônicas</CategoriaDescription>
+                      </CategoriaBox>
+                    </Card>
+                  </div>
+                  <div className="col-md-4">
+                    <Card>
+                      <CategoriaBox>
+                        <MaterialIcon icon="chrome_reader_mode" size={35} color="#ff3366" />
+                        <h4>Literatura</h4>
+                        <CategoriaDescription>suspense, românce, drama, ficção e o que mais imaginar</CategoriaDescription>
+                      </CategoriaBox>
+                    </Card>
+                  </div>
+                  <div className="col-md-4">
+                    <Card>
+                      <CategoriaBox>
+                        <MaterialIcon icon="widgets" size={35} color="#ff3366" />
+                        <h4>Arte</h4>
+                        <CategoriaDescription>obras inetimáveis para a humanidade passando desde o renascentismo ao surealismo de pinturas rupestres a esculturas de mármore</CategoriaDescription>
+                      </CategoriaBox>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Categoria>
+
+        <BannerEnd>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <BannerEndTitle>Faça parte da comunidade Alexandria também! </BannerEndTitle>
+                <BannerEndTitle>Compartilhe o seu conhecimento para o mundo :)</BannerEndTitle>
+
+                <Button type="button" variant="secondary">
+                  Contribuir
+                </Button>
+              </div>
+            </div>
+          </div>
+        </BannerEnd>
+
+      </div>
     )
   }
 }

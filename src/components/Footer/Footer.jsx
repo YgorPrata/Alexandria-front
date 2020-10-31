@@ -9,7 +9,6 @@ export default class Footer extends Component {
           <TopFooter>
             <div className="container">
               <div className="row">
-                <Border></Border>
                 <div className="col-sm-12">
                   <p>apoiadores:</p>
                 </div>

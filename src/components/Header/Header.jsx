@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WrapperHeader, HeaderGrid } from './Header.styled'
+import { WrapperHeader, HeaderGrid, Logo } from './Header.styled'
 import Navbar from 'react-bootstrap/Navbar'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import FormControl from 'react-bootstrap/FormControl'
@@ -15,7 +15,11 @@ export default class Header extends Component {
             <div className="container">
               <HeaderGrid>
                 <Navbar.Brand>
-                  <Link to="/">Alexandria</Link>
+                  <Logo>
+                    <Link to="/">
+                      <img src={`${process.env.PUBLIC_URL}/assets/images/alexandria-logo.png`} alt=""/>
+                    </Link>
+                  </Logo>
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
