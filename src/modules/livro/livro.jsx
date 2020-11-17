@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { getArquitetura } from '../../utils/services/arquitetura.service'
+import { getLivro } from '../../utils/services/livro.service'
 import { 
   Wrapper, 
   WrapperHeader, 
@@ -16,23 +16,21 @@ import {
   LisImages,
   LisImagesItem,
   ImgWrapper,
-  ItemText } from './arquitetura.styled'
+  ItemText } from './livro.styled'
 
 import ReactHtmlParser from 'react-html-parser'
 
 import { withRouter} from 'react-router-dom'
 import queryString from 'query-string'
 import Button from 'react-bootstrap/Button'
-import Carrossel from '../../components/carroussel/carroussel.component'
 import MaterialIcon from 'material-icons-react'
 
-class Arquitetura extends Component {
+class Livro extends Component {
 
   state = {
-    arquitetura: Object,
+    livro: Object,
     imageList: [],
     image: [],
-    showCarossel: false,
   }
 
   constructor(props) {
@@ -59,14 +57,13 @@ class Arquitetura extends Component {
     }
   }
 
-  getProdutoId(id){
-    getArquitetura(id).then((response) => {
+  getProdutoId(id){ 
+    getLivro(id).then((response) => {
       if('id_prod' in response){
         this.setState({ 
-          arquitetura: response,
+          livro: response,
           image: response.listImg.map(e => e.path_img),
           imageList: response.listImg,
-          showCarossel: true,
         })
       }
       else{
@@ -81,7 +78,7 @@ class Arquitetura extends Component {
   }
 
   render() {
-    const { arquitetura, imageList, image, showCarossel } = this.state
+    const { livro, imageList, image } = this.state
 
     return (
       <Wrapper>
@@ -99,52 +96,58 @@ class Arquitetura extends Component {
               <div className="row">
                 <div className="col-md-12">
                   <Titulo>
-                    <MaterialIcon icon="apartment" size={20} color="#23885e" />{arquitetura.titulo}
+                    <MaterialIcon icon="widgets" size={20} color="#923324" />{livro.titulo}
                   </Titulo>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
                   <WrapperHeader>
-                    <span>autor</span>
-                    <BoxHeader>{arquitetura.autor}</BoxHeader>
+                    <span>artista</span>
+                    <BoxHeader>{livro.autor}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>tipo</span>
-                    <BoxHeader>{arquitetura.tipo}</BoxHeader>
+                    <BoxHeader>{livro.tipo}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>ano</span>
-                    <BoxHeader>{arquitetura.ano}</BoxHeader>
+                    <BoxHeader>{livro.ano}</BoxHeader>
                   </WrapperHeader>
                 </div>
                 <div className="col-md-6">
                   <WrapperHeader>
                     <span>categoria</span>
-                    <BoxHeader>{arquitetura.categoria}</BoxHeader>
+                    <BoxHeader>{livro.categoria}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>localidade</span>
-                    <BoxHeader>{arquitetura.localidade}</BoxHeader>
+                    <BoxHeader>{livro.localidade}</BoxHeader>
                   </WrapperHeader>
                 </div>
               </div>
             </div>
           </div>
 
-          <Descricao>{ReactHtmlParser(arquitetura.descricao)}</Descricao>
+          <Descricao>{ReactHtmlParser(livro.descricao)}</Descricao>
 
           <div className="row">
             <div className="col-md-6">
               <WrapperHeader>
-                <span>área construida</span>
-                <BoxHeader>{arquitetura.area} m²</BoxHeader>
+                <span>editora</span>
+                <BoxHeader>{livro.editora}</BoxHeader>
               </WrapperHeader>
             </div>
             <div className="col-md-6">
               <WrapperHeader>
-                <span>curador</span>
-                <BoxHeader>{arquitetura.curador}</BoxHeader>
+                <span>edição</span>
+                <BoxHeader>{livro.edicao} º</BoxHeader>
+              </WrapperHeader>
+            </div>
+            <div className="col-md-12">
+              <WrapperHeader>
+                <span>biografia</span>
+                <BoxHeader>{livro.biografia}</BoxHeader>
               </WrapperHeader>
             </div>
           </div>
@@ -184,17 +187,9 @@ class Arquitetura extends Component {
             </div>
           </div>
         </BannerEnd>
-
-      {/* {showCarossel && (
-        <Carrossel>
-          <BoxImg>
-            <img src={`${process.env.PUBLIC_URL + imageList.map(e => e.id_img)}`} />
-          </BoxImg>
-        </Carrossel>
-      )} */}
       </Wrapper>
     )
   }
 }
 
-export default withRouter(Arquitetura)
+export default withRouter(Livro)

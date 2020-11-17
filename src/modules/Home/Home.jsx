@@ -20,8 +20,7 @@ import {
   WrapperSearchImg,
   WrapperCategoria,
   SearchItem,
-  CategoriaDescription } from './Home.styled'
-
+  CategoriaDescription } from './home.styled'
   
 import { Link } from "react-router-dom"
 
@@ -31,27 +30,38 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 
-import { getProdutoSimples } from '../../utils/services/produtoSimples.service'
+import { getProdutoSimples } from '../../utils/services/produto-simples.service'
+import { getTotalProdutos } from '../../utils/services/total-produtos.service'
+import { getNovidades } from '../../utils/services/novidades.service'
 
 
 const initialState = {
-  produtoSimples: '',
-  searchValue: '',
-  categoria: '',
-  tipo: '',
+  totalProdutosService: Number,
+  produtoSimplesService: Object,
+  novidadeService: '',
+  searchValue: String,
+  categoria: String,
+  tipo: String,
   typeSearch: 'tipo',
   categoriaSearch: 'categoria',
   activeSearch: false,
   disableButton: true,
   seachNotFound: false,
+  showNovidades: false,
 }
 
 export default class Home extends Component {
   state = { ...initialState }
 
-  // componentDidMount() {
-  //   this.setState({ produtoSimples: })
-  // }
+  componentDidMount() {
+    getTotalProdutos().then((response) => {
+      this.setState({ totalProdutosService: response })
+    })
+
+    getNovidades(4).then((response) => {
+      this.setState({novidadeService: response, showNovidades: true})
+    })
+  }
 
   constructor(props) {
     super(props)
@@ -64,13 +74,13 @@ export default class Home extends Component {
     getProdutoSimples(value, tipo, categoria, limite).then((response) => {
       typeof response === 'object' ? (
         this.setState({ 
-          produtoSimples: response, 
+          produtoSimplesService: response, 
           activeSearch: true,
           seachNotFound: false 
         })
       ) : (
         this.setState({ 
-          produtoSimples: '',
+          produtoSimplesService: '',
           activeSearch: false,
           seachNotFound: true  
         })
@@ -99,19 +109,22 @@ export default class Home extends Component {
 
   render() {
     const { 
-      produtoSimples, 
+      produtoSimplesService, 
+      totalProdutosService,
+      novidadeService,
       searchValue,
       typeSearch,
       categoriaSearch, 
       activeSearch,
       disableButton,
-      seachNotFound } = this.state;
+      seachNotFound,
+      showNovidades} = this.state;
 
     return (
       <div>
         <Banner>
           <div className="container">
-            <SearchTitle>Encontre entre <span>20.000</span> itens de material inestimável para humanidade</SearchTitle>
+            <SearchTitle>Encontre entre <span>{ totalProdutosService }</span> itens de material inestimável para humanidade</SearchTitle>
             <InputGroup>
               <FormControl
                 placeholder="arquitetura, artes, literaturas ..."
@@ -175,7 +188,7 @@ export default class Home extends Component {
                 <Button 
                   type="button" 
                   disabled={ disableButton } 
-                  onClick={() => this.searchProduct(searchValue, typeSearch, categoriaSearch, 3)}>
+                  onClick={() => this.searchProduct(searchValue, typeSearch, categoriaSearch, 10)}>
                   <MaterialIcon icon="search" size={21} color="#fff" />
                 </Button>
               </ButtonSearch>
@@ -183,17 +196,17 @@ export default class Home extends Component {
 
             <WrapperSearch className="box-scroll-bar">
               {
-                activeSearch && ( produtoSimples.map(produto => 
+                activeSearch && ( produtoSimplesService.map(produto => 
 
                   <Link key={ produto.id_prod } to={{
-                    pathname: "/arquitetura",
+                    pathname: "/" + produto.categoria,
                     paramsProduct: {
                       id: produto.id_prod,
                       categoria: produto.categoria,
                     }
                   }}>
                     <SearchItem>
-
+                      
                       <WrapperSearchImg>
                         <img src={`${process.env.PUBLIC_URL + produto.img.path_img}`} />
                       </WrapperSearchImg>
@@ -213,7 +226,7 @@ export default class Home extends Component {
                           <MaterialIcon icon="chrome_reader_mode" size={20} color="#e24f37" />
                         }{
                           produto.categoria == "arte" &&
-                          <MaterialIcon icon="widgets" size={20} color="#37d2e2" />
+                          <MaterialIcon icon="widgets" size={20} color="#117a8b" />
                         }
                       </WrapperCategoria>
                     </SearchItem>
@@ -228,6 +241,32 @@ export default class Home extends Component {
                 )
               }
 
+              { activeSearch && (
+                produtoSimplesService.length === 10 ? (
+                  <Link to={{
+                    pathname: "/busca-completa",
+                    paramsBusca: {
+                      search: searchValue,
+                      tipo: typeSearch,
+                      categoria: categoriaSearch,
+                    }
+                  }}>
+                    <SearchItem>veja mais itens para sua busca</SearchItem>
+                  </Link>
+                ) : (
+                  <Link to={{
+                    pathname: "/busca-completa",
+                    paramsBusca: {
+                      search: searchValue,
+                      tipo: typeSearch,
+                      categoria: categoriaSearch,
+                    }
+                  }}>
+                    <SearchItem>ver mais informações dos itens da sua busca</SearchItem>
+                  </Link>
+                )
+              )}
+
             </WrapperSearch>
 
           </div>
@@ -239,24 +278,36 @@ export default class Home extends Component {
               <div className="col-md-12">
                 <NovidadeTitle>Novidades por aqui</NovidadeTitle>
 
-                <div className="row">
-                  <div className="col-md-6">
-                    <Card>
-                      <ImgNovidade>
-                        <img src={`${process.env.PUBLIC_URL}/assets/images/11.jpg`} alt=""/>
-                      </ImgNovidade>
-                      <BoxNovidadeInfo>
-                        <BoxNovidadeTitle>Museu do Amanhã</BoxNovidadeTitle>
-                        <div>2017</div>
-                        <div>Santiago Calatrava</div>
-                      </BoxNovidadeInfo>
+                
+                { showNovidades && ( 
+                  <div className="row">
+                    { novidadeService.map(novidade => (
+                      <div className="col-md-6">
+                        <Link key={ novidade.id_prod } to={{
+                            pathname: "/" + novidade.categoria,
+                            paramsProduct: {
+                              id: novidade.id_prod,
+                              categoria: novidade.categoria,
+                            }
+                          }}>
+                        
+                          <Card>
+                            <ImgNovidade>
+                              <img src={`${process.env.PUBLIC_URL + novidade.img.path_img}`} alt=""/>
+                            </ImgNovidade>
+                            <BoxNovidadeInfo>
+                              <BoxNovidadeTitle>{ novidade.titulo }</BoxNovidadeTitle>
+                              <span>{ novidade.ano }2020 mock</span>
+                              <span>{ novidade.autor }</span>
+                            </BoxNovidadeInfo>
 
-                    </Card>
+                          </Card>
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                  <div className="col-md-6">
-                    <Card>blá blá</Card>
-                  </div>
-                </div>
+                )}
+
               </div>
             </div>
           </div>
@@ -270,31 +321,58 @@ export default class Home extends Component {
 
                 <div className="row">
                   <div className="col-md-4">
-                    <Card>
-                      <CategoriaBox>
-                        <MaterialIcon icon="apartment" size={37} color="#ff3366" />
-                        <h4>Arquitetura</h4>
-                        <CategoriaDescription>morumentos históricos, museus, grandes contruções, prédios modernos e obras primas arquitetônicas</CategoriaDescription>
-                      </CategoriaBox>
-                    </Card>
+                    <Link to={{
+                      pathname: "/busca-completa",
+                      paramsBusca: {
+                        search: null,
+                        tipo: 'tipo',
+                        categoria: 'arquitetura',
+                      }
+                    }}>
+                      <Card>
+                        <CategoriaBox>
+                          <MaterialIcon icon="apartment" size={37} color="#ff3366" />
+                          <h4>Arquitetura</h4>
+                          <CategoriaDescription>morumentos históricos, museus, grandes contruções, prédios modernos e obras primas arquitetônicas</CategoriaDescription>
+                        </CategoriaBox>
+                      </Card>
+                    </Link>
                   </div>
                   <div className="col-md-4">
-                    <Card>
-                      <CategoriaBox>
-                        <MaterialIcon icon="chrome_reader_mode" size={35} color="#ff3366" />
-                        <h4>Literatura</h4>
-                        <CategoriaDescription>suspense, românce, drama, ficção e o que mais imaginar</CategoriaDescription>
-                      </CategoriaBox>
-                    </Card>
+                    <Link to={{
+                      pathname: "/busca-completa",
+                      paramsBusca: {
+                        search: null,
+                        tipo: 'tipo',
+                        categoria: 'livro',
+                      }
+                    }}>
+                      <Card>
+                        <CategoriaBox>
+                          <MaterialIcon icon="chrome_reader_mode" size={35} color="#ff3366" />
+                          <h4>Literatura</h4>
+                          <CategoriaDescription>suspense, românce, drama, ficção e o que mais imaginar</CategoriaDescription>
+                        </CategoriaBox>
+                      </Card>
+                    </Link>
                   </div>
                   <div className="col-md-4">
-                    <Card>
-                      <CategoriaBox>
-                        <MaterialIcon icon="widgets" size={35} color="#ff3366" />
-                        <h4>Arte</h4>
-                        <CategoriaDescription>obras inetimáveis para a humanidade passando desde o renascentismo ao surealismo de pinturas rupestres a esculturas de mármore</CategoriaDescription>
-                      </CategoriaBox>
-                    </Card>
+                    <Link to={{
+                      pathname: "/busca-completa",
+                      paramsBusca: {
+                        search: null,
+                        tipo: 'tipo',
+                        categoria: 'arte',
+                      }
+                    }}>
+                      <Card>
+                        <CategoriaBox>
+                          <MaterialIcon icon="widgets" size={35} color="#ff3366" />
+                          <h4>Arte</h4>
+                          <CategoriaDescription>obras inetimáveis para a humanidade passando desde o renascentismo ao surealismo de pinturas rupestres a esculturas de mármore</CategoriaDescription>
+                        </CategoriaBox>
+                      </Card>
+                    </Link>
                   </div>
                 </div>
               </div>

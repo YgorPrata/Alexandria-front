@@ -23,7 +23,7 @@ export const Titulo = styled.h2`
 
   .material-icons{
     border-radius: 50%;
-    background: #37e29b;
+    background: #117a8b;
     padding: 6px;
     margin-right: 18px;
   }
@@ -52,12 +52,12 @@ export const Descricao = styled.div`
 export const MarkDecoretor = styled.div`
   width: 97%;
   height: 1px;
-  background: #37e29b;
+  background: #117a8b;
   margin-top: 39px;
 `
 
 export const BannerEnd = styled.div`
-  background: #37e29b;
+  background: #117a8b;
   margin-top: 90px;
   padding: 100px 0;
   color: #fff;

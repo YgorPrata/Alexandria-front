@@ -95,7 +95,7 @@ export const WrapperCategoria = styled.div`
     props.categoria == "livro" && "#e24f37"
   )};
   color: ${ props => (
-    props.categoria == "arte" && "#37d2e2"
+    props.categoria == "arte" && "#117a8b"
   )};
 
   span {
@@ -173,32 +173,42 @@ export const Card = styled.div`
   border-radius: 5px;
   padding: 20px 20px;
   cursor: pointer;
+
+  &:hover{
+    color: #2a2d33;
+  }
 `
 export const ImgNovidade = styled.div`
-  background: red;
+  background: #fff;
   width: 100%;
   height: 170px;
   overflow: hidden;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
   
   img{
     position: relative;
-    width: 149%;
-    top: -17%;
-    left: -17%;
+    width: 111%;
+    height: 142%;
+    top: -21%;
     transition: ease 0.7s;
 
     &:hover{ 
-      width: 153%;
-      top: -19%;
-      left: -19%;
+      width: 114%;
+      height: 145%;
+      top: -22%;
       filter: grayscale(50%);
+      color: #2a2d33;
     }
   }
 `
 export const BoxNovidadeInfo = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
+  &:hover{
+    color: #2a2d33;
+  }
 `
 
 export const BoxNovidadeTitle = styled.div`

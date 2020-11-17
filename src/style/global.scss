@@ -19,7 +19,7 @@ a{
   color: #2a2d33;
   text-decoration: none !important;
   &:hover{
-    color:  #ff3366;
+    color:  #2a2d33;
   }
 }
 
@@ -58,9 +58,10 @@ code {
     &:disabled{
       background: white;
       color: #4e4e4e;
+      border: none!important;
 
       .material-icons{
-        color: #4e4e4e!important;
+        color: #ffffff!important;
       }
     }
   }
@@ -78,6 +79,10 @@ code {
       box-shadow: none;
     }
   }
+}
+
+button:disabled{
+  background: #313131!important;
 }
 
 input:focus {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WrapperHeader, HeaderGrid, Logo } from './Header.styled'
+import { WrapperHeader, HeaderGrid, Logo } from './header.styled'
 import Navbar from 'react-bootstrap/Navbar'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import FormControl from 'react-bootstrap/FormControl'
@@ -43,9 +43,9 @@ export default class Header extends Component {
                       <NavDropdown.Item><Link to="/cadastro/outros">Outros</Link></NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link><Link to="/linha-do-tempo">Linha do Tempo</Link></Nav.Link>
+                    {/* <Nav.Link><Link to="/linha-do-tempo">Linha do Tempo</Link></Nav.Link>
                     <Nav.Link><Link to="/historia">História</Link></Nav.Link>
-                    <Nav.Link><Link to="/time">Nosso Time</Link></Nav.Link>
+                    <Nav.Link><Link to="/time">Nosso Time</Link></Nav.Link> */}
                   </Nav>
 
                   {/* <Form inline>

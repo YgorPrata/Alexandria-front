@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { baseUrl } from '../api/api'
 
-export const getArquitetura = (id) => { 
-  return axios.get(baseUrl + 'app/produto/arquitetura/buscacompleta/?id=' + id)
+export const getNovidades = (limite) => { 
+  return axios.get(baseUrl + 'app/produto/novidades?limite=' + limite)
     .then((response) => {
         return response.data
     })

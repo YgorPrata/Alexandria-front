@@ -6,12 +6,15 @@ import {
 } from "react-router-dom"
 
 // import { Header, Footer }  from '../components/index'
-import Footer from '../components/Footer/Footer'
-import Header from '../components/Header/Header'
-import Home from './Home/Home'
-import Arquitetura from './Arquitetura/Arquitetura'
-import CadastroArquitetura from './Arquitetura/CadastroArquitetura/CadastroArquitetura'
-import LinhaDoTempo from './LinhaDoTempo/LinhaDoTempo'
+import Footer from '../components/footer/footer'
+import Header from '../components/header/header'
+import Home from './home/home'
+import Busca from './busca/busca'
+import Arquitetura from './Arquitetura/arquitetura'
+import Arte from './arte/arte'
+import Livro from './livro/livro'
+import CadastroArquitetura from './Arquitetura/cadastro-arquitetura/cadastro-arquitetura'
+import LinhaDoTempo from './linha-do-tempo/linha-do-tempo'
 
 export const App = () => (
   <Fragment>
@@ -21,7 +24,10 @@ export const App = () => (
 
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/busca-completa" component={Busca} />
         <Route path="/arquitetura" component={Arquitetura} />
+        <Route path="/arte" component={Arte} />
+        <Route path="/livro" component={Livro} />
         <div className="container">
           <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
           <Route path="/linha-do-tempo" component={LinhaDoTempo} />

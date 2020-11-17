@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Border, WrapperFooter, EndFooter, TopFooter } from './Footer.styled'
+import { Border, WrapperFooter, EndFooter, TopFooter } from './footer.styled'
 
 export default class Footer extends Component {
   render() {
     return (
       <div>
         <WrapperFooter>
-          <TopFooter>
+          {/* <TopFooter>
             <div className="container">
               <div className="row">
                 <div className="col-sm-12">
@@ -14,7 +14,7 @@ export default class Footer extends Component {
                 </div>
               </div>
             </div>
-          </TopFooter>
+          </TopFooter> */}
           <div className="container">
             <div className="row">
               <EndFooter className="col-sm-12">

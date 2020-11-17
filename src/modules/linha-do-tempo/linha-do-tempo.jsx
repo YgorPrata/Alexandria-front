@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { } from './LinhaDoTempo.styled'
+import { } from './linha-do-tempo.styled'
 
 export default class LinhaDoTempo extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { getArquitetura } from '../../utils/services/arquitetura.service'
+import { getArte } from '../../utils/services/arte.service'
 import { 
   Wrapper, 
   WrapperHeader, 
@@ -16,7 +16,7 @@ import {
   LisImages,
   LisImagesItem,
   ImgWrapper,
-  ItemText } from './arquitetura.styled'
+  ItemText } from './arte.styled'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -26,13 +26,12 @@ import Button from 'react-bootstrap/Button'
 import Carrossel from '../../components/carroussel/carroussel.component'
 import MaterialIcon from 'material-icons-react'
 
-class Arquitetura extends Component {
+class Arte extends Component {
 
   state = {
-    arquitetura: Object,
+    arte: Object,
     imageList: [],
     image: [],
-    showCarossel: false,
   }
 
   constructor(props) {
@@ -59,14 +58,13 @@ class Arquitetura extends Component {
     }
   }
 
-  getProdutoId(id){
-    getArquitetura(id).then((response) => {
+  getProdutoId(id){ 
+    getArte(id).then((response) => {
       if('id_prod' in response){
         this.setState({ 
-          arquitetura: response,
+          arte: response,
           image: response.listImg.map(e => e.path_img),
           imageList: response.listImg,
-          showCarossel: true,
         })
       }
       else{
@@ -81,7 +79,7 @@ class Arquitetura extends Component {
   }
 
   render() {
-    const { arquitetura, imageList, image, showCarossel } = this.state
+    const { arte, imageList, image } = this.state
 
     return (
       <Wrapper>
@@ -99,52 +97,46 @@ class Arquitetura extends Component {
               <div className="row">
                 <div className="col-md-12">
                   <Titulo>
-                    <MaterialIcon icon="apartment" size={20} color="#23885e" />{arquitetura.titulo}
+                    <MaterialIcon icon="widgets" size={20} color="#0b5561" />{arte.titulo}
                   </Titulo>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
                   <WrapperHeader>
-                    <span>autor</span>
-                    <BoxHeader>{arquitetura.autor}</BoxHeader>
+                    <span>artista</span>
+                    <BoxHeader>{arte.autor}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>tipo</span>
-                    <BoxHeader>{arquitetura.tipo}</BoxHeader>
+                    <BoxHeader>{arte.tipo}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>ano</span>
-                    <BoxHeader>{arquitetura.ano}</BoxHeader>
+                    <BoxHeader>{arte.ano}</BoxHeader>
                   </WrapperHeader>
                 </div>
                 <div className="col-md-6">
                   <WrapperHeader>
                     <span>categoria</span>
-                    <BoxHeader>{arquitetura.categoria}</BoxHeader>
+                    <BoxHeader>{arte.categoria}</BoxHeader>
                   </WrapperHeader>
                   <WrapperHeader>
                     <span>localidade</span>
-                    <BoxHeader>{arquitetura.localidade}</BoxHeader>
+                    <BoxHeader>{arte.localidade}</BoxHeader>
                   </WrapperHeader>
                 </div>
               </div>
             </div>
           </div>
 
-          <Descricao>{ReactHtmlParser(arquitetura.descricao)}</Descricao>
+          <Descricao>{ReactHtmlParser(arte.descricao)}</Descricao>
 
           <div className="row">
             <div className="col-md-6">
               <WrapperHeader>
-                <span>área construida</span>
-                <BoxHeader>{arquitetura.area} m²</BoxHeader>
-              </WrapperHeader>
-            </div>
-            <div className="col-md-6">
-              <WrapperHeader>
-                <span>curador</span>
-                <BoxHeader>{arquitetura.curador}</BoxHeader>
+                <span>técnica aplicada</span>
+                <BoxHeader>{arte.tecnica}</BoxHeader>
               </WrapperHeader>
             </div>
           </div>
@@ -197,4 +189,4 @@ class Arquitetura extends Component {
   }
 }
 
-export default withRouter(Arquitetura)
+export default withRouter(Arte)
