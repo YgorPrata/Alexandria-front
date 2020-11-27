@@ -37,14 +37,35 @@ export const WrapperHeader = styled.div`
         // trasition: ease-in;
       
           &:hover{
-          border-bottom: 3px solid #ff3366;
+            color: #ff3366;
+          /* border-bottom: 3px solid #ff3366;
           padding-bottom: 4px;
-          margin-bottom: -11px;
+          margin-bottom: -11px; */
         }
       }
     }
   }
 `
+export const Login = styled.div`
+  display: flex;
+  color: #ff3366;
+  cursor: pointer;
+  align-items: center;
+  margin: 6px 0 0px 20px;
+  padding: 0;
+
+  &:hover{
+    color: #bb254b;
+    .material-icons{
+      color: #bb254b;
+    }
+  }
+
+  span{
+    margin-left: 6px;
+  }
+`
+
 export const HeaderGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;

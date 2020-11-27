@@ -5,9 +5,9 @@ import {
   Route,
 } from "react-router-dom"
 
-// import { Header, Footer }  from '../components/index'
 import Footer from '../components/footer/footer'
 import Header from '../components/header/header'
+import Login from './login/login'
 import Home from './home/home'
 import Busca from './busca/busca'
 import Arquitetura from './Arquitetura/arquitetura'
@@ -23,11 +23,13 @@ export const App = () => (
       <span className="header-spancing"></span>
 
       <Switch>
+        <Route path="/login" component={Login} />
         <Route exact path="/" component={Home} />
         <Route path="/busca-completa" component={Busca} />
         <Route path="/arquitetura" component={Arquitetura} />
         <Route path="/arte" component={Arte} />
-        <Route path="/livro" component={Livro} />
+        <Route path="/livro" component={Livro} />        
+
         <div className="container">
           <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
           <Route path="/linha-do-tempo" component={LinhaDoTempo} />

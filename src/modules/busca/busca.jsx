@@ -139,7 +139,8 @@ class Busca extends Component {
       typeSearch,
       categoriaSearch, 
       activeSearch,
-      disableButton} = this.state;
+      disableButton,
+      seachNotFound} = this.state;
 
     return (
       <div>
@@ -219,11 +220,14 @@ class Busca extends Component {
               </WrapperInput>
             </div>
             <div className="col-md-4">
-              <CleanSearch onClick={() => this.cleanSearch()}>limpar busca</CleanSearch>
+              <CleanSearch onClick={() => this.cleanSearch()}>
+                <span>limpar busca</span>
+                <MaterialIcon icon="cancel" size={20} color="#fff" />
+              </CleanSearch>
             </div>
           </div>
 
-          <WrapperSearch className="box-scroll-bar">
+          <WrapperSearch>
             {
               activeSearch && ( produtoSimplesService.map(produto => 
 
@@ -234,7 +238,7 @@ class Busca extends Component {
                     categoria: produto.categoria,
                   }
                 }}>
-                  <SearchItem>
+                  <SearchItem categoria={ produto.categoria }>
                     
                     <div>
                       <WrapperSearchImg>
@@ -268,6 +272,14 @@ class Busca extends Component {
                   </SearchItem>
                 </Link>
               ))
+            }
+
+            {
+              seachNotFound && (
+                <SearchItem>
+                  Não escontramos nenhum item para sua busca :/
+                </SearchItem>
+              )
             }
           </WrapperSearch>
 

@@ -46,28 +46,17 @@ export const SearchItem = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   text-align: left;
-  transition: ease 0.7s;
+  transition: ease 0.4s;
   text-overflow: ellipsis;
 
   &:last-child{
     border: none;
   }
-  
-  // border-color: #37e29b;
 
-  &:hover{
+  &:hover{    
+    border-left-width: 3px;
     background: rgb(39 39 39 / 75%);
     padding: 9px 22px 9px 22px;
-
-    /* border-left: 6px solid ${ props => (
-      props.categoria == "arquitetura" && "#37e29b"
-    )};
-    border-left: 6px solid ${ props => (
-      props.categoria == "livro" && "#e24f37"
-    )};
-    border-left: 6px solid ${ props => (
-      props.categoria == "arte" && "#37d2e2"
-    )}; */
   }
 `
 
@@ -80,6 +69,15 @@ export const WrapperSearchImg = styled.div`
   display: flex;
   margin-right: 18px;
   border: 2px solid #9e9e9e;
+  border-color: ${ props => (
+    props.categoria == "arquitetura" && "#37e29b"
+  )};
+  border-color: ${ props => (
+    props.categoria == "livro" && "#e24f37"
+  )};
+  border-color: ${ props => (
+    props.categoria == "arte" && "#117a8b"
+  )};
 
   img{
     width: 100px;

@@ -7,11 +7,22 @@ export const WrapperInput = styled.div`
 export const CleanSearch = styled.div`
   margin-top: 41px;
   cursor: pointer;
-  background: #ff3366;
+  background: #3a3a3a;
   color: #fff;
   border-radius: 20px;
-  padding: 1px 10px;
+  padding: 1px 14px;
   width: fit-content;
+  transition: ease 0.7s;
+  display: flex;
+
+  .material-icons{
+    padding: 2px 0 0 6px;
+  }
+
+  &:hover{
+    background: #ff3366;
+    padding: 1px 19px;
+  }
 `
 
 export const ButtonSearch = styled.div`
@@ -37,8 +48,24 @@ export const SearchItem = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   text-align: left;
-  transition: ease 0.7s;
+  border-right: 0px solid;
+  transition: ease 0.1s;
   text-overflow: ellipsis;
+
+
+  border-color: ${ props => (
+    props.categoria == "arquitetura" && "#37e29b"
+  )};
+  border-color: ${ props => (
+    props.categoria == "livro" && "#e24f37"
+  )};
+  border-color: ${ props => (
+    props.categoria == "arte" && "#117a8b"
+  )};
+
+  &:hover{
+    border-right-width: 5px;
+  }
 
   @media (max-width: 767px){
     grid-template-columns: auto;

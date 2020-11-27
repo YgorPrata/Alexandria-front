@@ -58,7 +58,7 @@ export default class Home extends Component {
       this.setState({ totalProdutosService: response })
     })
 
-    getNovidades(4).then((response) => {
+    getNovidades(2).then((response) => {
       this.setState({novidadeService: response, showNovidades: true})
     })
   }
@@ -207,7 +207,7 @@ export default class Home extends Component {
                   }}>
                     <SearchItem>
                       
-                      <WrapperSearchImg>
+                      <WrapperSearchImg categoria={ produto.categoria }>
                         <img src={`${process.env.PUBLIC_URL + produto.img.path_img}`} />
                       </WrapperSearchImg>
 
