@@ -151,7 +151,7 @@ class Arquitetura extends Component {
             </div>
             <div className="col-md-6">
               <WrapperHeader>
-                <span>contribuido por</span>
+                <span>contribuição de</span>
                 <BoxHeader>
                   {userName}
                 </BoxHeader>

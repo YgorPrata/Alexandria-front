@@ -6,8 +6,14 @@ import MaterialIcon from 'material-icons-react'
 import FormControl from 'react-bootstrap/FormControl'
 
 import { Link } from "react-router-dom"
+import { ExitToApp } from '@material-ui/icons'
 
 export default class Header extends Component {
+
+  exitToApp(){
+    localStorage.clear()
+    location.href = "/"
+  }
 
   render() {
     return (
@@ -70,7 +76,7 @@ export default class Header extends Component {
                     </NavDropdown>
 
                     {
-                      localStorage.getItem('username').length > 0 ? (
+                      localStorage.getItem('username') === null ? (
                         <Link to="/login">
                           <Login>
                             <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
@@ -78,14 +84,30 @@ export default class Header extends Component {
                           </Login>
                         </Link>
                       ) : (
-                        <Link to="/dashboard">
-                          <Login>
-                            <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
-                            <span>{localStorage.getItem('username')}</span>
-                          </Login>
-                        </Link>
+                        <Login>
+                          <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                          <NavDropdown title={localStorage.getItem('username')} id="contribuirs">
+                            <NavDropdown.Item>
+                              <Link to="/dashboard">
+                                <Login>
+                                  <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                                  <span>area do usuário</span>
+                                </Login>
+                              </Link>
+                            </NavDropdown.Item>
+
+                            <NavDropdown.Item onClick={() => this.exitToApp()}>
+                              <Login>
+                                <MaterialIcon icon="exit_to_app" size={27} color="#ff3366" />
+                                <span>sair</span>
+                              </Login>
+                            </NavDropdown.Item>
+                          </NavDropdown>
+                        </Login>
                       )
                     }
+
+                        
 
 
 
