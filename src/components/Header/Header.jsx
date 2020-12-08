@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WrapperHeader, HeaderGrid, Logo, Login } from './header.styled'
+import { WrapperHeader, HeaderGrid, Logo, Login, LoginMenu, WrapperLogado } from './header.styled'
 import Navbar from 'react-bootstrap/Navbar'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import MaterialIcon from 'material-icons-react'
@@ -68,7 +68,7 @@ export default class Header extends Component {
                     </NavDropdown>
 
                     <NavDropdown title="contribuir" id="contribuirs">
-                      <NavDropdown.ItemText>Faça uma contribuiçao de:</NavDropdown.ItemText>
+                      <NavDropdown.ItemText>comtribuir com item:</NavDropdown.ItemText>
                       <NavDropdown.Divider />
                       <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
                       <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
@@ -84,26 +84,28 @@ export default class Header extends Component {
                           </Login>
                         </Link>
                       ) : (
-                        <Login>
-                          <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                        <WrapperLogado>
+                          <MaterialIcon icon="face" size={27} color="#424242" />
                           <NavDropdown title={localStorage.getItem('username')} id="contribuirs">
                             <NavDropdown.Item>
                               <Link to="/dashboard">
-                                <Login>
-                                  <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                                <LoginMenu>
+                                  <MaterialIcon icon="account_box" size={27} color="#363636" />
                                   <span>area do usuário</span>
-                                </Login>
+                                </LoginMenu>
                               </Link>
                             </NavDropdown.Item>
 
+                            <NavDropdown.Divider />
+                            
                             <NavDropdown.Item onClick={() => this.exitToApp()}>
-                              <Login>
-                                <MaterialIcon icon="exit_to_app" size={27} color="#ff3366" />
+                              <LoginMenu>
+                                <MaterialIcon icon="exit_to_app" size={27} color="#a02424" />
                                 <span>sair</span>
-                              </Login>
+                              </LoginMenu>
                             </NavDropdown.Item>
                           </NavDropdown>
-                        </Login>
+                        </WrapperLogado>
                       )
                     }
 

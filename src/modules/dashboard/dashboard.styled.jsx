@@ -11,7 +11,9 @@ export const Banner = styled.div`
 `
 
 export const Wrapper = styled.div`
-  /* margin-top: 55px; */
+  h4{
+    margin: 30px 0 0 0;
+  }
 `
 
 export const Title = styled.h5`
@@ -33,7 +35,7 @@ export const WrapperProduto = styled.div`
 `
 
 export const MyProdutos = styled.div`
-  padding: 50px 0 50px 0;
+  padding: 30px 0 50px 0;
 `
 
 export const Card = styled.div`

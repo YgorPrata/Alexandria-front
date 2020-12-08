@@ -66,6 +66,30 @@ export const Login = styled.div`
   }
 `
 
+export const LoginMenu = styled.div`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin: 0px 0 0px -8px;
+  padding: 0;
+
+  span{
+    margin-left: 6px;
+  }
+`
+
+export const WrapperLogado = styled.div`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin: 0px 0 0px 20px;
+  padding: 0;
+
+  span{
+    margin-left: 6px;
+  }
+`
+
 export const HeaderGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;

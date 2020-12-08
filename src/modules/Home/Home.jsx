@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MaterialIcon from 'material-icons-react'
 
-import { Banner,SearchTitle, BannerEnd, BannerEndTitle,Novidade, Card, NovidadeTitle, Categoria, CategoriaTitle, ImgNovidade, BoxNovidadeInfo, CategoriaBox, BoxNovidadeTitle,ButtonSearch,WrapperSearch,WrapperSearchImg,WrapperCategoria,SearchItem,CategoriaDescription } from './home.styled'
+import { Banner,SearchTitle, BannerEnd, BannerEndTitle,Novidade, Card, NovidadeTitle, Categoria, CategoriaTitle, ImgNovidade, BoxNovidadeInfo, CategoriaBox, BoxNovidadeTitle,ButtonSearch,WrapperSearch,WrapperSearchImg,WrapperCategoria, SearchItem, CategoriaDescription, WrapperCategoriaNovidade } from './home.styled'
 
 import { Link } from "react-router-dom"
 
@@ -39,7 +39,7 @@ export default class Home extends Component {
       this.setState({ totalProdutosService: response })
     })
 
-    getNovidades(2).then((response) => {
+    getNovidades(3).then((response) => {
       this.setState({novidadeService: response, showNovidades: true})
     })
   }
@@ -263,7 +263,7 @@ export default class Home extends Component {
                 { showNovidades && ( 
                   <div className="row">
                     { novidadeService.map(novidade => (
-                      <div className="col-md-6">
+                      <div className="col-md-4 margin-novidade">
                         <Link key={ novidade.id_prod } to={{
                             pathname: "/" + novidade.categoria,
                             paramsProduct: {
@@ -278,8 +278,21 @@ export default class Home extends Component {
                             </ImgNovidade>
                             <BoxNovidadeInfo>
                               <BoxNovidadeTitle>{ novidade.titulo }</BoxNovidadeTitle>
-                              <span>{ novidade.ano }2020 mock</span>
                               <span>{ novidade.autor }</span>
+                              <WrapperCategoriaNovidade categoria={ novidade.categoria }>
+                                <span>{ novidade.categoria }</span>
+
+                                {
+                                  novidade.categoria == "arquitetura" &&
+                                  <MaterialIcon icon="apartment" size={20} color="#fff" />
+                                }{
+                                  novidade.categoria == "livro" &&
+                                  <MaterialIcon icon="chrome_reader_mode" size={20} color="#fff" />
+                                }{
+                                  novidade.categoria == "arte" &&
+                                  <MaterialIcon icon="widgets" size={20} color="#fff" />
+                                }
+                              </WrapperCategoriaNovidade>
                             </BoxNovidadeInfo>
 
                           </Card>
@@ -301,7 +314,7 @@ export default class Home extends Component {
                 <CategoriaTitle>Pricipais categorias</CategoriaTitle>
 
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-4 margin-categoria">
                     <Link to={{
                       pathname: "/busca-completa",
                       paramsBusca: {
@@ -319,7 +332,7 @@ export default class Home extends Component {
                       </Card>
                     </Link>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 margin-categoria">
                     <Link to={{
                       pathname: "/busca-completa",
                       paramsBusca: {
@@ -337,7 +350,7 @@ export default class Home extends Component {
                       </Card>
                     </Link>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 margin-categoria">
                     <Link to={{
                       pathname: "/busca-completa",
                       paramsBusca: {

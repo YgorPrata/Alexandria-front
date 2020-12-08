@@ -102,6 +102,30 @@ export const WrapperCategoria = styled.div`
   }
 `
 
+export const WrapperCategoriaNovidade = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 11px;
+  border-radius: 22px;
+  color: #fff;
+  margin-top: 9px;
+
+  background: ${ props => (
+    props.categoria == "arquitetura" && "#37e29b"
+  )};
+  background: ${ props => (
+    props.categoria == "livro" && "#e24f37"
+  )};
+  background: ${ props => (
+    props.categoria == "arte" && "#117a8b"
+  )};
+
+  span {
+    margin-right: 9px;
+  }
+`
+
 export const BannerEnd = styled.div`
   background: #ff3366;
   padding: 100px 0;
@@ -128,7 +152,13 @@ export const BannerEndTitle = styled.div`
 
 export const Categoria = styled.div`
   padding: 50px 0 150px 0;
-  `
+
+  .margin-categoria{
+    @media (max-width: 767px){
+      margin-bottom: 15px;
+    }
+  }
+`
 
 export const CategoriaBox = styled.div`
   text-align: center;
@@ -160,6 +190,12 @@ export const CategoriaDescription = styled.p`
 
 export const Novidade = styled.div`
   padding: 150px 0 50px 0;
+
+  .margin-novidade{
+    @media (max-width: 767px){
+      margin-bottom: 15px;
+    }
+  }
 `
 
 export const NovidadeTitle = styled.h4`
@@ -171,6 +207,7 @@ export const Card = styled.div`
   border-radius: 5px;
   padding: 20px 20px;
   cursor: pointer;
+  min-height: 320px;
 
   &:hover{
     color: #2a2d33;
@@ -202,11 +239,7 @@ export const ImgNovidade = styled.div`
   }
 `
 export const BoxNovidadeInfo = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  &:hover{
-    color: #2a2d33;
-  }
+  min-height: 155px;
 `
 
 export const BoxNovidadeTitle = styled.div`

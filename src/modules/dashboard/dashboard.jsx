@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import MaterialIcon from 'material-icons-react'
 import { Link } from "react-router-dom"
+import MaterialIcon from 'material-icons-react'
 import Button from 'react-bootstrap/Button'
+import { Nav, NavDropdown } from 'react-bootstrap'
 
 import { Banner, Wrapper, Title, Msg, MyProdutos, WrapperProduto, Card, ImgMyProdutos, BoxMyProdutosInfo, BoxMyProdutosTitle, WrapperCategoria, WrapperButtons, EditarButton, DeleteButton  } from './dashboard.styled'
 
@@ -52,14 +53,16 @@ export default class Dashboard extends Component {
 
                 <Title>que bom te ver por aqui <span>{localStorage.getItem('username')}</span>!<br/> Sua contribuição é muito importante para que materiais inestimáveis não sejam perdidos :)</Title>
 
-                { myProdutosService[0] !== undefined &&
-                  <Button type="button" variant="primary" active={true}>
-                    minhas contribuições
-                  </Button>
-                }
-
                 <Button type="button" variant="primary">
-                  nova contribuição
+                  <Nav>
+                    <NavDropdown title="nova contribuição" id="contribuirs">
+                      <NavDropdown.ItemText>Faça uma contribuiçao de:</NavDropdown.ItemText>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
                 </Button>
               </div>
             </div>
@@ -69,6 +72,16 @@ export default class Dashboard extends Component {
         <div className="container"> 
           { myProdutosService[0] !== undefined &&
             <div className="col-md-12">
+              { myProdutosService[0] !== undefined && 
+                <div>
+                  <h4>minhas contribuições</h4>
+                  {myProdutosService.length > 1 ? (
+                    <span>você tem {myProdutosService.length} itens cadastrados</span>
+                  ):(
+                    <span>você tem {myProdutosService.length} item cadastrado</span>
+                  )}
+                </div>
+              }
               <MyProdutos>                
                 { showMyProdutos && ( 
                   <div className="row">

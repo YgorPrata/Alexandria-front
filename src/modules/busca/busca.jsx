@@ -99,7 +99,7 @@ class Busca extends Component {
   }
   
   getNovidades() {
-    return getNovidades(999999).then((response) => {
+    return getNovidades(99999).then((response) => {
       this.setState({produtoSimplesService: response, activeSearch: true})
     })
   }
