@@ -33,6 +33,7 @@ class Arquitetura extends Component {
     imageList: [],
     image: [],
     showCarossel: false,
+    userName: '',
   }
 
   constructor(props) {
@@ -66,6 +67,7 @@ class Arquitetura extends Component {
           arquitetura: response,
           image: response.listImg.map(e => e.path_img),
           imageList: response.listImg,
+          userName: response.user.user_name,
           showCarossel: true,
         })
       }
@@ -81,7 +83,7 @@ class Arquitetura extends Component {
   }
 
   render() {
-    const { arquitetura, imageList, image, showCarossel } = this.state
+    const { arquitetura, imageList, image, showCarossel, userName } = this.state
 
     return (
       <Wrapper>
@@ -145,6 +147,14 @@ class Arquitetura extends Component {
               <WrapperHeader>
                 <span>curador</span>
                 <BoxHeader>{arquitetura.curador}</BoxHeader>
+              </WrapperHeader>
+            </div>
+            <div className="col-md-6">
+              <WrapperHeader>
+                <span>contribuido por</span>
+                <BoxHeader>
+                  {userName}
+                </BoxHeader>
               </WrapperHeader>
             </div>
           </div>

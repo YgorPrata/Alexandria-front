@@ -1,106 +1,132 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import MaterialIcon from 'material-icons-react'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+
 import { SaveArquitetura } from '../../../utils/services/cadastro/arquitetura-cadastro.service'
 export default class CadastroArquitetura extends Component{
   state = {
-    categoria: 'arquitetura',
-    titulo: String,
-    autor: String,
-    descricao: String,
-    tipo: String,
-    localizacao: String,
-    ano: Number,
-    curador: String,
-    area: Number,
-    img: [],
-    descricaoImg: String,
-    fileImg: HTMLInputElement,
-    fileDesc: String,
+    titulo: null,
+    autor: null,
+    descricao: null,
+    tipo: null,
+    localidade: null,
+    ano: null,
+    curador: null,
+    area: null,
+    img: null,
+    desc_img: null,
+    img2: null,
+    desc_img2: null,
+    validated: false,
+    listImages: null,
+    listDescImages: null,
+    contadorImg: 1,
+    arr: null,
   }
 
-  constructor(props){
-    super(props)
-    this.state.fileImg = HTMLInputElement;
+  constructor() {
+    super();
   }
 
-  save (){
-
-    const objToSave = {
-      // categoria:  this.state.categoria,
-      // titulo:  this.state.titulo,
-      // autor:  this.state.autor,
-      // descricao:  this.state.descricao,
-      // tipo:  this.state.tipo,
-      // localizacao:  this.state.localizacao,
-      // ano:  parseInt(this.state.ano),
-      // curador:  this.state.curador,
-      // area: parseInt(this.state.area),
-      
-      // fileImg: this.state.fileImg,
-      // fileDesc: this.state.fileDesc,
-      
-
-
-      ano: 6,
-      area: 5,
-      autor: "Ygor Autor",
-      categoria: "arquitetura",
-      curador: "uuuuuuuu",
-      descricao: "cewcwec",
-      localizacao: "São Paulo",
-      tipo: "alvenaria convencional",
-      titulo: "ssss",
-
-      listImg: [
-        {
-          desc_img: "desc2 update",
-          id_img: 1,
-          path_img: this.state.fileImg
-        },
-      ]
+  onSubmit = e => {
+    e.preventDefault();
+    
+    const state = this.state
+    const form = e.currentTarget
+    if (form.checkValidity() === false) {
+      e.preventDefault()
+      e.stopPropagation()
     }
 
-
-    SaveArquitetura(objToSave).then((response) => {
-      console.log('eeeee', response)
+    this.setState({
+      validated: true
     })
+
+    if(this.state.ano !== '' && this.state.ano !== null 
+      && this.state.autor !== '' && this.state.autor !== null
+      && this.state.descricao !== '' && this.state.descricao !== null
+      && this.state.desc_img !== '' && this.state.desc_img !== null
+      && this.state.localidade !== '' && this.state.localidade !== null
+      && this.state.tipo !== '' && this.state.tipo !== null
+      && this.state.titulo !== '' && this.state.titulo !== null
+      && this.state.area !== '' && this.state.area !== null
+      && this.state.curador !== '' && this.state.curador !== null){
+        const body = new FormData(this.form)
     
-    console.log('obj', this.state.fileImg)
+        body.append("arq", 
+        '{' + 
+          '"categoria": "arquitetura",' +
+          '"ano": ' + state.ano  + ',' +
+          '"autor": "' + state.autor  + '",' +
+          '"descricao": "' + state.descricao  + '",' +
+          '"listImg": [' + 
+            '{"desc_img": "' + state.desc_img  + '"}' +
+            // '{"desc_img": "' + state.desc_img2  + '"}' +
+          '],' +
+          '"localidade": "' + state.localidade  + '",' +
+          '"tipo": "' + state.tipo  + '",' +
+          '"titulo": "' + state.titulo  + '",' + 
+          '"area": ' + state.area  + ',' +
+          '"curador": "' + state.curador +
+        '"}'
+        )
+    
+        SaveArquitetura(body).then((response) => {
+          if(response === 201){
+            alert('cadastro realizado com sucesso! Obrigado por sua contribuição :)')
+          }
+        })
+    }
+  
   }
 
-  // teste(val){
-  //   this.setState({ 
-  //     fileImg: val,
-  //   })
-  // }
+  addMoreImgs(){
+    if(this.state.contadorImg > 20){
+      alert('limite máximo de imagens é de 20 itens')
+    }
+    else{
+      this.setState({
+        contadorImg: this.state.contadorImg + 1,
+        arr: new Array(this.state.contadorImg)
+      })
+    }
+  }
 
   render(){
-    const { 
+    const {
       titulo,
       autor,
       descricao,
       tipo,
-      localizacao,
+      localidade,
       ano,
       curador,
       area,
-      fileImg,
-      fileDesc,
+      desc_img,
+      desc_img2,
+      validated,
+      contadorImg,
+      arr,
     } = this.state
 
     return(
       <div>
         Cadastro Arquitetura
 
-        <h4 onClick={() => this.save()}>click</h4>
 
-        <Form>
+
+        <Form noValidate validated={validated} onSubmit={this.onSubmit} ref={el => (this.form = el)}>
           <Form.Group 
-            controlId="titulo" 
+            controlId="titulo"
             value={titulo}
             onChange={e => this.setState({ titulo: e.target.value })}>
             <Form.Label>título</Form.Label>
-            <Form.Control type="text" placeholder="adicione um título" />
+            <Form.Control required type="text" />
+
+            <Form.Control.Feedback type="invalid">
+              insira um título
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
@@ -108,7 +134,11 @@ export default class CadastroArquitetura extends Component{
             value={autor}
             onChange={e => this.setState({ autor: e.target.value })}>
             <Form.Label>autor</Form.Label>
-            <Form.Control type="text" placeholder="adicione um autor" />
+            <Form.Control required type="text" />
+
+            <Form.Control.Feedback type="invalid">
+              insira um autor
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
@@ -116,15 +146,19 @@ export default class CadastroArquitetura extends Component{
             value={descricao}
             onChange={e => this.setState({ descricao: e.target.value })}>
             <Form.Label>descrição</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control required as="textarea" rows={3} />
+
+            <Form.Control.Feedback type="invalid">
+              insira uma descrição
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
             controlId="tipo"
             value={tipo}
             onChange={e => this.setState({ tipo: e.target.value })}>
-            <Form.Label>tipo</Form.Label>
-            <Form.Control as="select" size="md">
+            <Form.Label>tipo de construção</Form.Label>
+            <Form.Control required as="select" size="md">
               <option></option>
               <option>alvenaria convencional</option>
               <option>blocos de pedra</option>
@@ -132,14 +166,22 @@ export default class CadastroArquitetura extends Component{
               <option>construção moderna</option>
               <option>construção em maderia</option>
             </Form.Control>
+
+            <Form.Control.Feedback type="invalid">
+              insira um tipo de construção
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
-            controlId="localizacao"
-            value={localizacao}
-            onChange={e => this.setState({ localizacao: e.target.value })}>
+            controlId="localidade"
+            value={localidade}
+            onChange={e => this.setState({ localidade: e.target.value })}>
             <Form.Label>localização da construção</Form.Label>
-            <Form.Control type="text" placeholder="adicione um local da construção" />
+            <Form.Control required type="text" />
+
+            <Form.Control.Feedback type="invalid">
+              insira uma localidade
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
@@ -147,7 +189,11 @@ export default class CadastroArquitetura extends Component{
             value={ano}
             onChange={e => this.setState({ ano: e.target.value })}>
             <Form.Label>ano da construção</Form.Label>
-            <Form.Control type="number" placeholder="adicione um ano da construção" />
+            <Form.Control required type="number"  />
+
+            <Form.Control.Feedback type="invalid">
+              insira o ano de construção
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
@@ -155,7 +201,11 @@ export default class CadastroArquitetura extends Component{
             value={curador}
             onChange={e => this.setState({ curador: e.target.value })}>
             <Form.Label>curador da construção</Form.Label>
-            <Form.Control type="text" placeholder="adicione um curador da construção" />
+            <Form.Control required type="text" />
+
+            <Form.Control.Feedback type="invalid">
+              insira um curador da construção
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group 
@@ -163,45 +213,92 @@ export default class CadastroArquitetura extends Component{
             value={area}
             onChange={e => this.setState({ area: e.target.value })}>
             <Form.Label>área da construção</Form.Label>
-            <Form.Control type="number" placeholder="adicione uma área da construção" />
+            <Form.Control required type="number" />
+
+            <Form.Control.Feedback type="invalid">
+              insira uma área da construção
+            </Form.Control.Feedback>
           </Form.Group>
-
-
-          {/* <Form.Group>
-            <Form.File id="file1" label="imagem pricipal" />
-            <Form.Text className="text-muted">
-              adicione uma fotografia principal da arquitetura. Procure fotografias tiradas em hanbientes bem iluminados e com bom enquadramento :)
-            </Form.Text>
-          </Form.Group> */}
-
-
 
           <Form.Group>
             <Form.Label>imagem principal</Form.Label>
-            <Form.File id="file1" custom>
+            <Form.File  custom>
               <Form.File.Input 
-              isValid 
-              value={fileImg} 
-              onChange={() => this.setState({ fileImg: event.target.value })} />
+              controlId="img"
+              isValid
+              required
+              name="img" />
               <Form.File.Label 
                 data-browse="adicionar">
                 adicione uma imagem principal
               </Form.File.Label>
-              <Form.Control.Feedback type="valid">imagem adicionada com sucesso :)</Form.Control.Feedback>
+
+              <Form.Control.Feedback type="invalid">
+                insira uma imagem principal
+              </Form.Control.Feedback>
             </Form.File>
+
           </Form.Group>
-          
-          
-          <input type="file" ref={this.fileInput} />
 
           <Form.Group 
-            controlId="file1-desc"
-            value={fileDesc}
-            onChange={e => this.setState({ fileDesc: e.target.value })}>
+            controlId="desc_img"
+            value={desc_img}
+            onChange={e => this.setState({ desc_img: e.target.value })}>
             <Form.Label>descrição da imagem</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control required as="textarea" rows={3} />
+
+            <Form.Control.Feedback type="invalid">
+              insira uma descrição para sua imagem
+            </Form.Control.Feedback>
           </Form.Group>
 
+          <Button type="button" variant="primary" onClick={() => this.addMoreImgs()}>
+            <MaterialIcon icon="add_photo_alternate" size={18
+            } color="#fff" />
+            adicionar mais imagens
+          </Button>
+
+          {
+            contadorImg > 1 && (
+              <div>
+
+                {contadorImg}
+                {arr.forEach(e => (
+                  <div>k{e}</div>
+                ))}
+              </div>
+            )
+          }
+
+
+
+          {/* <Form.Group>
+            <Form.Label>imagem principal</Form.Label>
+            <Form.File  custom>
+              <Form.File.Input 
+              controlId="img2"
+              isValid={false}
+              name="img"/>
+              <Form.File.Label 
+                data-browse="adicionar">
+                adicione uma imagem principal
+              </Form.File.Label>
+            </Form.File>
+          </Form.Group>
+
+          <Form.Group 
+            controlId="desc_img2"
+            value={desc_img2}
+            onChange={e => this.setState({ desc_img2: e.target.value })}>
+            <Form.Label>descrição da imagem</Form.Label>
+            <Form.Control required as="textarea" rows={3} />
+          </Form.Group> */}
+
+
+
+          <Button type="submit" variant="primary">
+            cadastrar
+          </Button>
         </Form>
       </div>
     )

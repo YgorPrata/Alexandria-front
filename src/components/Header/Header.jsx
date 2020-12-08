@@ -59,8 +59,6 @@ export default class Header extends Component {
                           }
                         }}>livro</Link>
                       </NavDropdown.Item>
-                      {/* <NavDropdown.Divider />
-                      <NavDropdown.Item><Link to="/outros">Outros</Link></NavDropdown.Item> */}
                     </NavDropdown>
 
                     <NavDropdown title="contribuir" id="contribuirs">
@@ -71,12 +69,25 @@ export default class Header extends Component {
                       <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
                     </NavDropdown>
 
-                    <Link to="/login">
-                      <Login>
-                        <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
-                        <span>login</span>
-                      </Login>
-                    </Link>
+                    {
+                      localStorage.getItem('username').length > 0 ? (
+                        <Link to="/login">
+                          <Login>
+                            <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                            <span>login</span>
+                          </Login>
+                        </Link>
+                      ) : (
+                        <Link to="/dashboard">
+                          <Login>
+                            <MaterialIcon icon="account_circle" size={27} color="#ff3366" />
+                            <span>{localStorage.getItem('username')}</span>
+                          </Login>
+                        </Link>
+                      )
+                    }
+
+
 
                     {/* <Nav.Link><Link to="/linha-do-tempo">Linha do Tempo</Link></Nav.Link>
                     <Nav.Link><Link to="/historia">História</Link></Nav.Link>

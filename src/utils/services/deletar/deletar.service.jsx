@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { baseUrl } from '../../api/api'
 
-export const SaveArquitetura = (formData) => { 
+export const deleteProduto = (id) => { 
 
-  return axios.post(baseUrl + 'app/user/arquitetura/cadastro', formData, {
+  return axios.delete(baseUrl + 'app/user/prod/delprods/' + id, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ' + localStorage.getItem('authorization'),
       'UserId': localStorage.getItem('userid'),
     }

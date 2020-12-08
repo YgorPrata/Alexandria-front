@@ -1,17 +1,16 @@
 import axios from 'axios'
 import { baseUrl } from '../../api/api'
 
-export const SaveArquitetura = (formData) => { 
+export const getMyProdutos = () => { 
 
-  return axios.post(baseUrl + 'app/user/arquitetura/cadastro', formData, {
+  return axios.get(baseUrl + 'app/user/prod/myprods/', {
     headers: {
-      'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ' + localStorage.getItem('authorization'),
       'UserId': localStorage.getItem('userid'),
     }
   })
     .then((response) => {
-        return response.status
+        return response.data
     })
     .catch((error) => {
         console.log('Error', error)

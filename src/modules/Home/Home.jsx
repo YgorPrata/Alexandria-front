@@ -1,27 +1,8 @@
 import React, { Component } from 'react'
 import MaterialIcon from 'material-icons-react'
 
-import { 
-  Banner,
-  SearchTitle, 
-  BannerEnd, 
-  BannerEndTitle,
-  Novidade, 
-  Card, 
-  NovidadeTitle, 
-  Categoria, 
-  CategoriaTitle, 
-  ImgNovidade, 
-  BoxNovidadeInfo, 
-  CategoriaBox, 
-  BoxNovidadeTitle,
-  ButtonSearch,
-  WrapperSearch,
-  WrapperSearchImg,
-  WrapperCategoria,
-  SearchItem,
-  CategoriaDescription } from './home.styled'
-  
+import { Banner,SearchTitle, BannerEnd, BannerEndTitle,Novidade, Card, NovidadeTitle, Categoria, CategoriaTitle, ImgNovidade, BoxNovidadeInfo, CategoriaBox, BoxNovidadeTitle,ButtonSearch,WrapperSearch,WrapperSearchImg,WrapperCategoria,SearchItem,CategoriaDescription } from './home.styled'
+
 import { Link } from "react-router-dom"
 
 import FormControl from 'react-bootstrap/FormControl'

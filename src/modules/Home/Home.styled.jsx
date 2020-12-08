@@ -37,6 +37,7 @@ max-height: 276px;
 overflow: auto;
 box-shadow: 0px 0px 10px 1px #b7b2b226;
 `
+
 export const SearchItem = styled.div`
   background: rgb(41 41 41 / 75%);
   padding: 9px;
@@ -99,7 +100,6 @@ export const WrapperCategoria = styled.div`
   span {
     margin-right: 9px;
   }
-
 `
 
 export const BannerEnd = styled.div`
