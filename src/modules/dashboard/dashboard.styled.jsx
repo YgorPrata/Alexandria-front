@@ -115,6 +115,7 @@ export const WrapperCategoria = styled.div`
   background: ${ props => (
     props.categoria == "arte" && "#117a8b"
   )};
+  
 
   span {
     margin-right: 9px;

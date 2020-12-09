@@ -3,6 +3,31 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   margin-top: 45px;
 `
+export const DeleteButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  span{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    width: 100%;
+    background: #ad2323;
+    color: #fff;
+    font-weight: 600;
+    transition: ease 0.7s;
+    margin-top: 8px;
+    padding: 3px 19px;
+    width: fit-content;
+    border-radius: 80px;
+    margin-bottom: 23px;
+  }
+
+  .material-icons{
+    margin-right: 5px;
+  }
+`
+
 export const BoxImg = styled.div`
   background: #fff;
   width: 150px;
@@ -133,7 +158,7 @@ export const ImgWrapper = styled.div`
 
 export const ItemText = styled.div`
   width: 100%;
-  max-height: 40px;
+  min-height: 160px;
   overflow: hidden;
   padding: 8px 18px 8px 18px;
 `

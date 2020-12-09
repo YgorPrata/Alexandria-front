@@ -67,13 +67,17 @@ export default class Header extends Component {
                       </NavDropdown.Item>
                     </NavDropdown>
 
-                    <NavDropdown title="contribuir" id="contribuirs">
-                      <NavDropdown.ItemText>comtribuir com item:</NavDropdown.ItemText>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
-                      <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
-                      <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
-                    </NavDropdown>
+                    {
+                      localStorage.getItem('username') !== null &&
+                      <NavDropdown title="contribuir" id="contribuirs">
+                        <NavDropdown.ItemText>comtribuir com item:</NavDropdown.ItemText>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
+                      </NavDropdown>
+                    }
+
 
                     {
                       localStorage.getItem('username') === null ? (
@@ -108,10 +112,6 @@ export default class Header extends Component {
                         </WrapperLogado>
                       )
                     }
-
-                        
-
-
 
                     {/* <Nav.Link><Link to="/linha-do-tempo">Linha do Tempo</Link></Nav.Link>
                     <Nav.Link><Link to="/historia">História</Link></Nav.Link>

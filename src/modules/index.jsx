@@ -33,10 +33,10 @@ export const App = () => (
         <Route path="/arquitetura" component={Arquitetura} />
         <Route path="/arte" component={Arte} />
         <Route path="/livro" component={Livro} />        
+        <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
+        <Route path="/editar/arquitetura" component={EditarArquitetura} />
 
         <div className="container">
-          <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
-          <Route path="/editar/arquitetura" component={EditarArquitetura} />
           {/* <Route path="/linha-do-tempo" component={LinhaDoTempo} /> */}
         </div>
       </Switch>

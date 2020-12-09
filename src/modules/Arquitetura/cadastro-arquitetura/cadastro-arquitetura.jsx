@@ -4,6 +4,9 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 import { SaveArquitetura } from '../../../utils/services/cadastro/arquitetura-cadastro.service'
+
+
+var array = [1]
 export default class CadastroArquitetura extends Component{
   state = {
     titulo: null,
@@ -21,12 +24,24 @@ export default class CadastroArquitetura extends Component{
     validated: false,
     listImages: null,
     listDescImages: null,
-    contadorImg: 1,
-    arr: null,
+    loadpage: false,
+    arrayButton: [1]
   }
 
   constructor() {
     super();
+  }
+
+  componentDidMount() {
+    if(localStorage.getItem('username') === null){
+      alert('você precisa estar logado para acessar essa página')
+      location.href = "/login"
+    }
+    else{
+      this.setState({
+        loadpage: true
+      })
+    }
   }
 
   onSubmit = e => {
@@ -53,7 +68,17 @@ export default class CadastroArquitetura extends Component{
       && this.state.area !== '' && this.state.area !== null
       && this.state.curador !== '' && this.state.curador !== null){
         const body = new FormData(this.form)
-    
+        var listImgDesc = ''
+
+        array.map((e, index) => {
+          if(array.length === index + 1){
+            listImgDesc += '{"desc_img": "' + document.getElementsByClassName('desc_img_itens')[index].value + '"}'  
+          }
+          else{
+            listImgDesc += '{"desc_img": "' + document.getElementsByClassName('desc_img_itens')[index].value + '"},'
+          }
+        }) 
+
         body.append("arq", 
         '{' + 
           '"categoria": "arquitetura",' +
@@ -61,8 +86,7 @@ export default class CadastroArquitetura extends Component{
           '"autor": "' + state.autor  + '",' +
           '"descricao": "' + state.descricao  + '",' +
           '"listImg": [' + 
-            '{"desc_img": "' + state.desc_img  + '"}' +
-            // '{"desc_img": "' + state.desc_img2  + '"}' +
+            listImgDesc +
           '],' +
           '"localidade": "' + state.localidade  + '",' +
           '"tipo": "' + state.tipo  + '",' +
@@ -78,19 +102,24 @@ export default class CadastroArquitetura extends Component{
           }
         })
     }
-  
   }
 
   addMoreImgs(){
-    if(this.state.contadorImg > 20){
-      alert('limite máximo de imagens é de 20 itens')
-    }
-    else{
+    if(array.length <= 20){
+      array.push(1)
       this.setState({
-        contadorImg: this.state.contadorImg + 1,
-        arr: new Array(this.state.contadorImg)
+        arrayButton: array
       })
+    } else {
+      alert('só é permitido adicionar 20 imagens')
     }
+  }
+
+  removeLastImgs() {
+    array.pop()
+    this.setState({
+      arrayButton: array
+    })
   }
 
   render(){
@@ -106,200 +135,186 @@ export default class CadastroArquitetura extends Component{
       desc_img,
       desc_img2,
       validated,
-      contadorImg,
-      arr,
+      loadpage,
+      arrayButton,
     } = this.state
 
     return(
-      <div>
-        Cadastro Arquitetura
+      <div className="container">
+        { loadpage && (
+          <div className="row">
+            
+            <div className="col-md-12">
+              <h2>Cadastro Arquitetura</h2>
 
+              <Form noValidate validated={validated} onSubmit={this.onSubmit} ref={el => (this.form = el)}>
+                <Form.Group 
+                  controlId="titulo"
+                  value={titulo}
+                  onChange={e => this.setState({ titulo: e.target.value })}>
+                  <Form.Label>título</Form.Label>
+                  <Form.Control required type="text" />
 
+                  <Form.Control.Feedback type="invalid">
+                    insira um título
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-        <Form noValidate validated={validated} onSubmit={this.onSubmit} ref={el => (this.form = el)}>
-          <Form.Group 
-            controlId="titulo"
-            value={titulo}
-            onChange={e => this.setState({ titulo: e.target.value })}>
-            <Form.Label>título</Form.Label>
-            <Form.Control required type="text" />
+                <Form.Group 
+                  controlId="autor"
+                  value={autor}
+                  onChange={e => this.setState({ autor: e.target.value })}>
+                  <Form.Label>autor</Form.Label>
+                  <Form.Control required type="text" />
 
-            <Form.Control.Feedback type="invalid">
-              insira um título
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira um autor
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="autor"
-            value={autor}
-            onChange={e => this.setState({ autor: e.target.value })}>
-            <Form.Label>autor</Form.Label>
-            <Form.Control required type="text" />
+                <Form.Group 
+                  controlId="descricao"
+                  value={descricao}
+                  onChange={e => this.setState({ descricao: e.target.value })}>
+                  <Form.Label>descrição</Form.Label>
+                  <Form.Control required as="textarea" rows={3} />
 
-            <Form.Control.Feedback type="invalid">
-              insira um autor
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira uma descrição
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="descricao"
-            value={descricao}
-            onChange={e => this.setState({ descricao: e.target.value })}>
-            <Form.Label>descrição</Form.Label>
-            <Form.Control required as="textarea" rows={3} />
+                <Form.Group 
+                  controlId="tipo"
+                  value={tipo}
+                  onChange={e => this.setState({ tipo: e.target.value })}>
+                  <Form.Label>tipo de construção</Form.Label>
+                  <Form.Control required as="select" size="md">
+                    <option></option>
+                    <option>alvenaria convencional</option>
+                    <option>blocos de pedra</option>
+                    <option>construção</option>
+                    <option>construção moderna</option>
+                    <option>construção em maderia</option>
+                  </Form.Control>
 
-            <Form.Control.Feedback type="invalid">
-              insira uma descrição
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira um tipo de construção
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="tipo"
-            value={tipo}
-            onChange={e => this.setState({ tipo: e.target.value })}>
-            <Form.Label>tipo de construção</Form.Label>
-            <Form.Control required as="select" size="md">
-              <option></option>
-              <option>alvenaria convencional</option>
-              <option>blocos de pedra</option>
-              <option>construção</option>
-              <option>construção moderna</option>
-              <option>construção em maderia</option>
-            </Form.Control>
+                <Form.Group 
+                  controlId="localidade"
+                  value={localidade}
+                  onChange={e => this.setState({ localidade: e.target.value })}>
+                  <Form.Label>localização da construção</Form.Label>
+                  <Form.Control required type="text" />
 
-            <Form.Control.Feedback type="invalid">
-              insira um tipo de construção
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira uma localidade
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="localidade"
-            value={localidade}
-            onChange={e => this.setState({ localidade: e.target.value })}>
-            <Form.Label>localização da construção</Form.Label>
-            <Form.Control required type="text" />
+                <Form.Group 
+                  controlId="ano"
+                  value={ano}
+                  onChange={e => this.setState({ ano: e.target.value })}>
+                  <Form.Label>ano da construção</Form.Label>
+                  <Form.Control required type="number"  />
 
-            <Form.Control.Feedback type="invalid">
-              insira uma localidade
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira o ano de construção
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="ano"
-            value={ano}
-            onChange={e => this.setState({ ano: e.target.value })}>
-            <Form.Label>ano da construção</Form.Label>
-            <Form.Control required type="number"  />
+                <Form.Group 
+                  controlId="curador"
+                  value={curador}
+                  onChange={e => this.setState({ curador: e.target.value })}>
+                  <Form.Label>curador da construção</Form.Label>
+                  <Form.Control required type="text" />
 
-            <Form.Control.Feedback type="invalid">
-              insira o ano de construção
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira um curador da construção
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="curador"
-            value={curador}
-            onChange={e => this.setState({ curador: e.target.value })}>
-            <Form.Label>curador da construção</Form.Label>
-            <Form.Control required type="text" />
+                <Form.Group 
+                  controlId="area"
+                  value={area}
+                  onChange={e => this.setState({ area: e.target.value })}>
+                  <Form.Label>área da construção</Form.Label>
+                  <Form.Control required type="number" />
 
-            <Form.Control.Feedback type="invalid">
-              insira um curador da construção
-            </Form.Control.Feedback>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    insira uma área da construção
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-          <Form.Group 
-            controlId="area"
-            value={area}
-            onChange={e => this.setState({ area: e.target.value })}>
-            <Form.Label>área da construção</Form.Label>
-            <Form.Control required type="number" />
+                <div className="row">
+                  {arrayButton.map((e, index) => (
+                    <div className="col-md-6">
+                      <h5>imagem {index + 1}</h5>
+                      <Form.Group>
+                        <Form.File  custom>
+                          <Form.File.Input 
+                          controlId="img"
+                          isValid
+                          required
+                          name="img" />
+                          <Form.File.Label 
+                            data-browse="adicionar">
+                            adicione uma imagem
+                          </Form.File.Label>
 
-            <Form.Control.Feedback type="invalid">
-              insira uma área da construção
-            </Form.Control.Feedback>
-          </Form.Group>
+                          <Form.Control.Feedback type="invalid">
+                            insira uma imagem
+                          </Form.Control.Feedback>
+                        </Form.File>
+                      </Form.Group>
 
-          <Form.Group>
-            <Form.Label>imagem principal</Form.Label>
-            <Form.File  custom>
-              <Form.File.Input 
-              controlId="img"
-              isValid
-              required
-              name="img" />
-              <Form.File.Label 
-                data-browse="adicionar">
-                adicione uma imagem principal
-              </Form.File.Label>
+                      <Form.Group 
+                        controlId="desc_img"
+                        value={desc_img}
+                        onChange={e => this.setState({ desc_img: e.target.value })}>
+                        <Form.Label>descrição da imagem</Form.Label>
+                        <Form.Control required as="textarea" 
+                        className="desc_img_itens" rows={3} />
 
-              <Form.Control.Feedback type="invalid">
-                insira uma imagem principal
-              </Form.Control.Feedback>
-            </Form.File>
+                        <Form.Control.Feedback type="invalid">
+                          insira uma descrição para sua imagem
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                  ))}
+                </div>
 
-          </Form.Group>
+                
+                <span>você adicionou {array.length} imagens</span>
 
-          <Form.Group 
-            controlId="desc_img"
-            value={desc_img}
-            onChange={e => this.setState({ desc_img: e.target.value })}>
-            <Form.Label>descrição da imagem</Form.Label>
-            <Form.Control required as="textarea" rows={3} />
+                <Button type="button" variant="primary" onClick={() => this.addMoreImgs()}>
+                  <MaterialIcon icon="add_photo_alternate" size={18
+                  } color="#fff" />
+                  adicionar mais imagens
+                </Button>
 
-            <Form.Control.Feedback type="invalid">
-              insira uma descrição para sua imagem
-            </Form.Control.Feedback>
-          </Form.Group>
+                {array.length > 1 &&
+                  <Button type="button" variant="primary" onClick={() => this.removeLastImgs()}>
+                    <MaterialIcon icon="add_photo_alternate" size={18
+                    } color="#fff" />
+                    remover última imagem
+                  </Button>
+                }
 
-          <Button type="button" variant="primary" onClick={() => this.addMoreImgs()}>
-            <MaterialIcon icon="add_photo_alternate" size={18
-            } color="#fff" />
-            adicionar mais imagens
-          </Button>
+                <br/>
 
-          {
-            contadorImg > 1 && (
-              <div>
-
-                {contadorImg}
-                {arr.forEach(e => (
-                  <div>k{e}</div>
-                ))}
-              </div>
-            )
-          }
-
-
-
-          {/* <Form.Group>
-            <Form.Label>imagem principal</Form.Label>
-            <Form.File  custom>
-              <Form.File.Input 
-              controlId="img2"
-              isValid={false}
-              name="img"/>
-              <Form.File.Label 
-                data-browse="adicionar">
-                adicione uma imagem principal
-              </Form.File.Label>
-            </Form.File>
-          </Form.Group>
-
-          <Form.Group 
-            controlId="desc_img2"
-            value={desc_img2}
-            onChange={e => this.setState({ desc_img2: e.target.value })}>
-            <Form.Label>descrição da imagem</Form.Label>
-            <Form.Control required as="textarea" rows={3} />
-          </Form.Group> */}
-
-
-
-          <Button type="submit" variant="primary">
-            cadastrar
-          </Button>
-        </Form>
+                <Button type="submit" variant="primary">
+                  cadastrar
+                </Button>
+              </Form>
+            </div>
+          </div>
+        )}
       </div>
     )
   }

@@ -212,7 +212,7 @@ class Busca extends Component {
                     <Button 
                       type="button" 
                       disabled={ disableButton } 
-                      onClick={() => this.searchProduct(searchValue, typeSearch, categoriaSearch, 3)}>
+                      onClick={() => this.searchProduct(searchValue, typeSearch, categoriaSearch, 99999)}>
                       <MaterialIcon icon="search" size={21} color="#fff" />
                     </Button>
                   </ButtonSearch>
@@ -240,12 +240,17 @@ class Busca extends Component {
                 }}>
                   <SearchItem categoria={ produto.categoria }>
                     
-                    <div>
+                    <div className="box-info-img">
                       <WrapperSearchImg>
                         <img src={`${process.env.PUBLIC_URL + produto.img.path_img}`} />
                       </WrapperSearchImg>
 
                       <WrapperAutor>{ produto.autor }</WrapperAutor>
+
+                      <div className="box-info-img-local">
+                        <MaterialIcon icon="room" size={17} color="#444444" />
+                        { produto.localidade }
+                      </div>
 
                       <WrapperCategoria categoria={ produto.categoria }>
                         <span>{ produto.categoria }</span>

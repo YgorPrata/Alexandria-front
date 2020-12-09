@@ -16,7 +16,8 @@ import {
   LisImages,
   LisImagesItem,
   ImgWrapper,
-  ItemText } from './livro.styled'
+  ItemText,
+  DeleteButton, } from './livro.styled'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -24,6 +25,8 @@ import { withRouter} from 'react-router-dom'
 import queryString from 'query-string'
 import Button from 'react-bootstrap/Button'
 import MaterialIcon from 'material-icons-react'
+
+import { deleteProduto } from '../../utils/services/deletar/deletar.service'
 
 class Livro extends Component {
 
@@ -77,14 +80,34 @@ class Livro extends Component {
     this.props.history.push('/')
   }
 
+  deleteProduto(id, titulo){
+    deleteProduto(id).then((response) => {
+      if(response === 200){
+        alert('a contribuição ' + titulo + ' foi deletada com sucesso', response )
+        this.props.history.push('/dashboard')
+      }
+    })
+  }
+
   render() {
-    const { livro, imageList, image } = this.state
+    const { livro, imageList, userName, image } = this.state
 
     return (
       <Wrapper>
 
         <div className="container">
           <div className="row">
+            <div className="col-md-12">
+              {
+                localStorage.getItem('username') !== null  && (localStorage.getItem('username') === userName || localStorage.getItem('role') === 'admin') &&
+                  <DeleteButton onClick={() => this.deleteProduto(livro.id_prod, livro.titulo)}>
+                    <span>
+                      <MaterialIcon icon="delete" size={18} color="#fff" />
+                      deletar
+                    </span>
+                  </DeleteButton>
+              }
+            </div>
             <div className="col-md-3">
 
               <BoxImg>

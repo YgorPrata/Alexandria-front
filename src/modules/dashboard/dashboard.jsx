@@ -14,18 +14,26 @@ import { deleteProduto } from '../../utils/services/deletar/deletar.service'
 const initialState = {
   myProdutosService: Object,
   showMyProdutos: false,
+  loadpage: false,
 }
 
 export default class Dashboard extends Component {
   state = { ...initialState }
 
   componentDidMount() {
-    getMyProdutos().then((response) => {
-      this.setState({
-        myProdutosService: response,
-        showMyProdutos: true
+    if(localStorage.getItem('username') !== null){
+      getMyProdutos().then((response) => {
+        this.setState({
+          myProdutosService: response,
+          showMyProdutos: true,
+          loadpage: true
+        })
       })
-    })
+    }
+    else{
+      alert('você precisa estar logado para acessar essa página')
+      location.href = "/login"
+    }
   }
 
   constructor() {
@@ -42,7 +50,7 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { myProdutosService, showMyProdutos } = this.state;
+    const { myProdutosService, showMyProdutos, loadpage } = this.state;
 
     return (
       <Wrapper>
@@ -142,13 +150,10 @@ export default class Dashboard extends Component {
                               </EditarButton>
                             </Link>
 
-                            {
-                              localStorage.getItem('role') === 'admin' &&
-                                <DeleteButton onClick={() => this.deleteProduto(myProdutos.id_prod, myProdutos.titulo)}>
-                                  <MaterialIcon icon="delete" size={18} color="#ad2323" />
-                                  deletar
-                                </DeleteButton>
-                            }
+                            <DeleteButton onClick={() => this.deleteProduto(myProdutos.id_prod, myProdutos.titulo)}>
+                              <MaterialIcon icon="delete" size={18} color="#ad2323" />
+                              deletar
+                            </DeleteButton>
                           </WrapperButtons>
 
                         </Card>

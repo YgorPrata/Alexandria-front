@@ -48,9 +48,26 @@ export const SearchItem = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   text-align: left;
-  border-right: 0px solid;
+  border-bottom: 0px solid;
   transition: ease 0.1s;
   text-overflow: ellipsis;
+
+  .box-info-img{
+    width: 200px;
+    padding-right: 27px;
+
+    @media (max-width: 767px){
+      padding: 0 0 25px 0;
+      width: 100%;
+      border-bottom: 1px solid #c6c6c6;
+    }
+
+    &-local{ 
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+    }
+  }
 
 
   border-color: ${ props => (
@@ -64,7 +81,7 @@ export const SearchItem = styled.div`
   )};
 
   &:hover{
-    border-right-width: 5px;
+    border-bottom-width: 5px;
   }
 
   @media (max-width: 767px){

@@ -16,7 +16,8 @@ import {
   LisImages,
   LisImagesItem,
   ImgWrapper,
-  ItemText } from './arquitetura.styled'
+  ItemText,
+  DeleteButton, } from './arquitetura.styled'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -25,6 +26,7 @@ import queryString from 'query-string'
 import Button from 'react-bootstrap/Button'
 import Carrossel from '../../components/carroussel/carroussel.component'
 import MaterialIcon from 'material-icons-react'
+import { deleteProduto } from '../../utils/services/deletar/deletar.service'
 
 class Arquitetura extends Component {
 
@@ -82,6 +84,15 @@ class Arquitetura extends Component {
     this.props.history.push('/')
   }
 
+  deleteProduto(id, titulo){
+    deleteProduto(id).then((response) => {
+      if(response === 200){
+        alert('a contribuição ' + titulo + ' foi deletada com sucesso', response )
+        this.props.history.push('/dashboard')
+      }
+    })
+  }
+
   render() {
     const { arquitetura, imageList, image, showCarossel, userName } = this.state
 
@@ -90,6 +101,17 @@ class Arquitetura extends Component {
 
         <div className="container">
           <div className="row">
+            <div className="col-md-12">
+              {
+                (localStorage.getItem('username') !== null)  && (localStorage.getItem('username') === userName || localStorage.getItem('role') === 'admin') &&
+                  <DeleteButton onClick={() => this.deleteProduto(arquitetura.id_prod, arquitetura.titulo)}>
+                    <span>
+                      <MaterialIcon icon="delete" size={18} color="#fff" />
+                      deletar
+                    </span>
+                  </DeleteButton>
+              }
+            </div>
             <div className="col-md-3">
 
               <BoxImg>
