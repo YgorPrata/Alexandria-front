@@ -3,7 +3,8 @@ import MaterialIcon from 'material-icons-react'
 
 import { Banner,SearchTitle, BannerEnd, BannerEndTitle,Novidade, Card, NovidadeTitle, Categoria, CategoriaTitle, ImgNovidade, BoxNovidadeInfo, CategoriaBox, BoxNovidadeTitle,ButtonSearch,WrapperSearch,WrapperSearchImg,WrapperCategoria, SearchItem, CategoriaDescription, WrapperCategoriaNovidade } from './home.styled'
 
-import { Link } from "react-router-dom"
+import { Nav, NavDropdown } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import FormControl from 'react-bootstrap/FormControl'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -257,7 +258,7 @@ export default class Home extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <NovidadeTitle>Novidades por aqui</NovidadeTitle>
+                <NovidadeTitle>novidades por aqui</NovidadeTitle>
 
                 
                 { showNovidades && ( 
@@ -311,7 +312,7 @@ export default class Home extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <CategoriaTitle>Pricipais categorias</CategoriaTitle>
+                <CategoriaTitle>pricipais categorias</CategoriaTitle>
 
                 <div className="row">
                   <div className="col-md-4 margin-categoria">
@@ -382,7 +383,15 @@ export default class Home extends Component {
                 <BannerEndTitle>Compartilhe o seu conhecimento para o mundo :)</BannerEndTitle>
 
                 <Button type="button" variant="secondary">
-                  Contribuir
+                  <Nav>
+                    <NavDropdown title="Contribuir" id="contribuirs">
+                      <NavDropdown.ItemText>comtribuir com:</NavDropdown.ItemText>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
                 </Button>
               </div>
             </div>

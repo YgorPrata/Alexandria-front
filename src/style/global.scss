@@ -49,6 +49,10 @@ code {
     border: none;
     border-radius: 30px;
     transition: ease 0.3s;
+
+    .nav-link{
+      color: #fff;
+    }
     
     &:hover, &:focus, &:active, &:visited, .active{
       background: #ea2f5e!important;
@@ -72,6 +76,10 @@ code {
     border: none;
     border-radius: 30px;
     transition: ease 0.3s;
+
+    .nav-link{
+      color: #fff;
+    }
     
     &:hover, &:focus, &:active, &:visited{
       background: #3c2226;

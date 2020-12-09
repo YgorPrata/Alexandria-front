@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 import MaterialIcon from 'material-icons-react'
 import Button from 'react-bootstrap/Button'
 import { Nav, NavDropdown } from 'react-bootstrap'
@@ -64,7 +64,7 @@ export default class Dashboard extends Component {
                 <Button type="button" variant="primary">
                   <Nav>
                     <NavDropdown title="nova contribuição" id="contribuirs">
-                      <NavDropdown.ItemText>Faça uma contribuiçao de:</NavDropdown.ItemText>
+                      <NavDropdown.ItemText>comtribuir com:</NavDropdown.ItemText>
                       <NavDropdown.Divider />
                       <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
                       <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>

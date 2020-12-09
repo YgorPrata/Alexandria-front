@@ -21,6 +21,8 @@ import {
 
 import ReactHtmlParser from 'react-html-parser'
 
+import { Nav, NavDropdown } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { withRouter} from 'react-router-dom'
 import queryString from 'query-string'
 import Button from 'react-bootstrap/Button'
@@ -33,6 +35,7 @@ class Arte extends Component {
     arte: Object,
     imageList: [],
     image: [],
+    userName: '',
   }
 
   constructor(props) {
@@ -65,6 +68,7 @@ class Arte extends Component {
         this.setState({ 
           arte: response,
           image: response.listImg.map(e => e.path_img),
+          userName: response.user.user_name,
           imageList: response.listImg,
         })
       }
@@ -160,6 +164,14 @@ class Arte extends Component {
                 <BoxHeader>{arte.tecnica}</BoxHeader>
               </WrapperHeader>
             </div>
+            <div className="col-md-6">
+              <WrapperHeader>
+                <span>contribuição de</span>
+                <BoxHeader>
+                  {userName}
+                </BoxHeader>
+              </WrapperHeader>
+            </div>
           </div>
 
           <MarkDecoretor></MarkDecoretor>
@@ -191,7 +203,15 @@ class Arte extends Component {
                 <BannerEndTitle>Compartilhe o seu conhecimento para o mundo :)</BannerEndTitle>
 
                 <Button type="button" variant="secondary">
-                  Contribuir
+                  <Nav>
+                    <NavDropdown title="Contribuir" id="contribuirs">
+                      <NavDropdown.ItemText>comtribuir com:</NavDropdown.ItemText>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item><Link to="/cadastro/arquitetura">arquitetura</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/arte">arte</Link></NavDropdown.Item>
+                      <NavDropdown.Item><Link to="/cadastro/livro">livro</Link></NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
                 </Button>
               </div>
             </div>

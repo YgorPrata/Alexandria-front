@@ -24,6 +24,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 
 import { getProdutoSimples } from '../../utils/services/produto-simples.service'
+import { getAllProdutos } from '../../utils/services/produto-get-all.service'
 import { getNovidades } from '../../utils/services/novidades.service'
 
 
@@ -63,7 +64,7 @@ class Busca extends Component {
         this.setState({ 
           categoriaSearch: categoria,
         })
-        this.searchProduct('', tipo, categoria, 99999)
+        this.getAllProdutos(categoria)
       }
       else{
         this.setState({ 
@@ -79,6 +80,23 @@ class Busca extends Component {
     }
   }
 
+  getAllProdutos(categoria){
+    getAllProdutos(categoria).then((response) => {
+      typeof response === 'object' ? (
+        this.setState({ 
+          produtoSimplesService: response, 
+          activeSearch: true,
+          seachNotFound: false 
+        })
+      ) : (
+        this.setState({ 
+          produtoSimplesService: '',
+          activeSearch: false,
+          seachNotFound: true  
+        })
+      )
+    })
+  }
 
   searchProduct(value, tipo, categoria, limite){ 
     getProdutoSimples(value, tipo, categoria, limite).then((response) => {

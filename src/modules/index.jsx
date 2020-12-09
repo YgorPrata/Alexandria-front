@@ -14,8 +14,11 @@ import Arquitetura from './Arquitetura/arquitetura'
 import Arte from './arte/arte'
 import Livro from './livro/livro'
 import Dashboard from './dashboard/dashboard'
+
 import CadastroArquitetura from './Arquitetura/cadastro-arquitetura/cadastro-arquitetura'
+import CadastroArte from './arte/cadastro-arte/cadastro-arte'
 import EditarArquitetura from './Arquitetura/editar-arquitetura/editar-arquitetura'
+
 
 // import LinhaDoTempo from './linha-do-tempo/linha-do-tempo'
 
@@ -34,6 +37,7 @@ export const App = () => (
         <Route path="/arte" component={Arte} />
         <Route path="/livro" component={Livro} />        
         <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
+        <Route path="/cadastro/arte" component={CadastroArte} />
         <Route path="/editar/arquitetura" component={EditarArquitetura} />
 
         <div className="container">
