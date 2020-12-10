@@ -35,8 +35,13 @@ export default function FormLoginCadastro({children}) {
     }
 
     cadastrarUsuarioService(dados).then((response) => {
-      alert(response)
-      logar()
+      if(response !== 500){
+        alert(response)
+        logar()
+      }
+      else{
+        alert('dados do login já existem tente outro!')
+      }
     })
   }
 

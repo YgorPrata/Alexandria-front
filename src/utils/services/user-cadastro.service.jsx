@@ -13,6 +13,6 @@ export const cadastrarUsuarioService = (cadastro) => {
 
     })
     .catch((error) => {
-        console.log('Error', error)
+      return 500
     })
 }

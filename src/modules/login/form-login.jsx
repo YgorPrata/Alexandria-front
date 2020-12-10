@@ -37,6 +37,7 @@ export default function FormLogin({children}) {
         location.href = "/dashboard"
       }
       else{
+        alert('login e/ou senha inválidos :(')
         setMsgError(true)
       }
     })
@@ -44,10 +45,6 @@ export default function FormLogin({children}) {
 
   return (
     <Form noValidate validated={validated}>
-      {
-        msgError &&
-          <p>login e/ou senha inválidos :(</p>
-      }
       <Form.Group 
         controlId="login" 
         onChange={e => setLogin(e.target.value)}
