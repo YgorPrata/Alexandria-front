@@ -287,7 +287,7 @@ export default class CadastroArquitetura extends Component{
                           value={desc_img}
                           onChange={e => this.setState({ desc_img: e.target.value })}>
                           <Form.Label>descrição</Form.Label>
-                          <Form.Control required as="textarea" 
+                          <Form.Control required as="textarea"  
                           className="desc_img_itens" rows={3} />
 
                           <Form.Control.Feedback type="invalid">

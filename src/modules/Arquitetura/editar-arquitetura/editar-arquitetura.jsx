@@ -88,8 +88,13 @@ class EditarArquitetura extends Component{
           loadpage: true
         })
 
+
         while(array.length < response.listImg.length){
           this.addMoreImgs(2)
+        }
+
+        for(var i = 0; i < response.listImg.length; i++){
+          document.getElementById('id-' + i).value = this.state.imageList[i].desc_img 
         }
       }
       else{
@@ -133,7 +138,7 @@ class EditarArquitetura extends Component{
             }
             else{
               listImgDesc += '{"desc_img": "' 
-                + this.state.imageList[index].desc_img + '",' 
+                + document.getElementsByClassName('desc_img_itens')[index].value + '",' 
                 + '"id_img": ' + this.state.imageList[index].id_img + ',"path_img": "' + this.state.imageList[index].path_img + '"}'
             }
           }
@@ -143,7 +148,7 @@ class EditarArquitetura extends Component{
             }
             else{
               listImgDesc += '{"desc_img": "' 
-                + this.state.imageList[index].desc_img + '",' 
+                + document.getElementsByClassName('desc_img_itens')[index].value + '",' 
                 + '"id_img": ' + this.state.imageList[index].id_img + ',"path_img": "' + this.state.imageList[index].path_img + '"},'
             }
           }
@@ -382,13 +387,14 @@ class EditarArquitetura extends Component{
                           </Form.File>
                         </Form.Group>
 
+
                         <Form.Group 
-                          controlId="desc_img"
-                          value={desc_img} 
-                          onChange={e => this.setState({ desc_img: e.target.value })}>
+                          value={desc_img}
+                          controlId="desc_img">
                           <Form.Label>descrição</Form.Label>
                           <Form.Control 
-                            value={index < imageList.length ? (imageList[index].desc_img) : (desc_img)} 
+                            onChange={e => this.setState({ desc_img: e.target.value })}
+                            id={"id-" + index}
                             required as="textarea" className="desc_img_itens" 
                             rows={3} />
 
