@@ -17,7 +17,11 @@ import Dashboard from './dashboard/dashboard'
 
 import CadastroArquitetura from './Arquitetura/cadastro-arquitetura/cadastro-arquitetura'
 import CadastroArte from './arte/cadastro-arte/cadastro-arte'
+import CadastroLivro from './livro/cadastro-livro/cadastro-livro'
+
 import EditarArquitetura from './Arquitetura/editar-arquitetura/editar-arquitetura'
+import EditarArte from './arte/editar-arte/editar-arte'
+import EditarLivro from './livro/editar-livro/editar-livro'
 
 
 // import LinhaDoTempo from './linha-do-tempo/linha-do-tempo'
@@ -38,7 +42,10 @@ export const App = () => (
         <Route path="/livro" component={Livro} />        
         <Route path="/cadastro/arquitetura" component={CadastroArquitetura} />
         <Route path="/cadastro/arte" component={CadastroArte} />
+        <Route path="/cadastro/livro" component={CadastroLivro} />
         <Route path="/editar/arquitetura" component={EditarArquitetura} />
+        <Route path="/editar/arte" component={EditarArte}/>
+        <Route path="/editar/livro" component={EditarLivro}/>
 
         <div className="container">
           {/* <Route path="/linha-do-tempo" component={LinhaDoTempo} /> */}

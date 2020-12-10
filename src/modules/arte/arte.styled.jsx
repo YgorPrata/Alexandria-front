@@ -24,6 +24,13 @@ export const DeleteButton = styled.div`
     margin-bottom: 23px;
   }
 
+  .btn-create{
+    background: #ffffff;
+    color: #252525;
+    border: 1px solid #c4c4c4;
+    margin-right: 8px;
+  }
+
   .material-icons{
     margin-right: 5px;
   }

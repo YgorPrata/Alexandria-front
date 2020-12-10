@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { getArquitetura } from '../../utils/services/arquitetura.service'
 import { 
   Wrapper, 
   WrapperHeader, 
@@ -18,7 +17,7 @@ import {
   ImgWrapper,
   ItemText,
   DeleteButton, } from './arquitetura.styled'
-
+  
 import ReactHtmlParser from 'react-html-parser'
 
 import { Nav, NavDropdown } from 'react-bootstrap'
@@ -28,6 +27,8 @@ import queryString from 'query-string'
 import Button from 'react-bootstrap/Button'
 import Carrossel from '../../components/carroussel/carroussel.component'
 import MaterialIcon from 'material-icons-react'
+
+import { getArquitetura } from '../../utils/services/arquitetura.service'
 import { deleteProduto } from '../../utils/services/deletar/deletar.service'
 
 class Arquitetura extends Component {
@@ -106,12 +107,25 @@ class Arquitetura extends Component {
             <div className="col-md-12">
               {
                 (localStorage.getItem('username') !== null)  && (localStorage.getItem('username') === userName || localStorage.getItem('role') === 'admin') &&
-                  <DeleteButton onClick={() => this.deleteProduto(arquitetura.id_prod, arquitetura.titulo)}>
-                    <span>
-                      <MaterialIcon icon="delete" size={18} color="#fff" />
-                      deletar
+                <DeleteButton>
+                  <Link key={ arquitetura.id_prod } to={{
+                    pathname: "editar/" + arquitetura.categoria,
+                    paramsProduct: {
+                      id: arquitetura.id_prod,
+                      categoria: arquitetura.categoria,
+                    }
+                  }}>
+                    <span className="btn-create">
+                      <MaterialIcon icon="create" size={18} color="#272727" />
+                      editar
                     </span>
-                  </DeleteButton>
+                  </Link>
+
+                  <span onClick={() => this.deleteProduto(arquitetura.id_prod, arquitetura.titulo)}>
+                    <MaterialIcon icon="delete" size={18} color="#fff" />
+                    deletar
+                  </span>
+                </DeleteButton>
               }
             </div>
             <div className="col-md-3">

@@ -20,8 +20,6 @@ export default class CadastroArte extends Component{
     tecnica: null,
     img: null,
     desc_img: null,
-    img2: null,
-    desc_img2: null,
     validated: false,
     listImages: null,
     listDescImages: null,
@@ -66,7 +64,6 @@ export default class CadastroArte extends Component{
       && this.state.localidade !== '' && this.state.localidade !== null
       && this.state.tipo !== '' && this.state.tipo !== null
       && this.state.titulo !== '' && this.state.titulo !== null
-      && this.state.area !== '' && this.state.area !== null
       && this.state.tecnica !== '' && this.state.tecnica !== null){
         const body = new FormData(this.form)
         var listImgDesc = ''
@@ -80,7 +77,7 @@ export default class CadastroArte extends Component{
           }
         }) 
 
-        body.append("arq", 
+        body.append("arte", 
         '{' + 
           '"categoria": "arte",' +
           '"ano": ' + state.ano  + ',' +
@@ -96,7 +93,7 @@ export default class CadastroArte extends Component{
         '"}'
         )
     
-        SaveProduto(body, 'arquitetura').then((response) => {
+        SaveProduto(body, 'arte').then((response) => {
           if(response === 201){
             alert('cadastro realizado com sucesso! Obrigado por sua contribuição :)')
             location.href = "/dashboard"

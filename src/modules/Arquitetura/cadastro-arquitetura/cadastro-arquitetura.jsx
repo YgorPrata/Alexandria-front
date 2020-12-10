@@ -21,8 +21,6 @@ export default class CadastroArquitetura extends Component{
     area: null,
     img: null,
     desc_img: null,
-    img2: null,
-    desc_img2: null,
     validated: false,
     listImages: null,
     listDescImages: null,
@@ -154,10 +152,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-6">
                     <Form.Group 
                       controlId="titulo"
-                      value={titulo}
                       onChange={e => this.setState({ titulo: e.target.value })}>
                       <Form.Label>título</Form.Label>
-                      <Form.Control required type="text" />
+                      <Form.Control value={titulo} required type="text" />
 
                       <Form.Control.Feedback type="invalid">
                         insira um título
@@ -168,10 +165,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-6">
                     <Form.Group 
                       controlId="autor"
-                      value={autor}
                       onChange={e => this.setState({ autor: e.target.value })}>
                       <Form.Label>autor</Form.Label>
-                      <Form.Control required type="text" />
+                      <Form.Control value={autor} required type="text" />
 
                       <Form.Control.Feedback type="invalid">
                         insira um autor
@@ -182,10 +178,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-12">
                     <Form.Group 
                       controlId="descricao"
-                      value={descricao}
                       onChange={e => this.setState({ descricao: e.target.value })}>
                       <Form.Label>descrição</Form.Label>
-                      <Form.Control required as="textarea" rows={3} />
+                      <Form.Control value={descricao}required as="textarea" rows={3} />
 
                       <Form.Control.Feedback type="invalid">
                         insira uma descrição
@@ -196,10 +191,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-6">
                     <Form.Group 
                       controlId="tipo"
-                      value={tipo}
                       onChange={e => this.setState({ tipo: e.target.value })}>
                       <Form.Label>tipo de construção</Form.Label>
-                      <Form.Control required type="text" />
+                      <Form.Control value={tipo}required type="text" />
 
                       <Form.Control.Feedback type="invalid">
                         insira um tipo
@@ -210,10 +204,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-6">
                     <Form.Group 
                       controlId="localidade"
-                      value={localidade}
                       onChange={e => this.setState({ localidade: e.target.value })}>
                       <Form.Label>localização da construção</Form.Label>
-                      <Form.Control required type="text" />
+                      <Form.Control value={localidade} required type="text" />
 
                       <Form.Control.Feedback type="invalid">
                         insira uma localidade
@@ -224,10 +217,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-6">
                     <Form.Group 
                       controlId="curador"
-                      value={curador}
                       onChange={e => this.setState({ curador: e.target.value })}>
                       <Form.Label>curador da construção</Form.Label>
-                      <Form.Control required type="text" />
+                      <Form.Control value={curador} required type="text" />
 
                       <Form.Control.Feedback type="invalid">
                         insira um curador da construção
@@ -238,10 +230,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-3">
                     <Form.Group 
                       controlId="ano"
-                      value={ano}
                       onChange={e => this.setState({ ano: e.target.value })}>
                       <Form.Label>ano da construção</Form.Label>
-                      <Form.Control required type="number"  />
+                      <Form.Control value={ano} required type="number"  />
 
                       <Form.Control.Feedback type="invalid">
                         insira o ano de construção
@@ -252,10 +243,9 @@ export default class CadastroArquitetura extends Component{
                   <div className="col-md-3">
                     <Form.Group 
                       controlId="area"
-                      value={area}
                       onChange={e => this.setState({ area: e.target.value })}>
                       <Form.Label>área da construção</Form.Label>
-                      <Form.Control required type="number" />
+                      <Form.Control value={area} required type="number" />
 
                       <Form.Control.Feedback type="invalid">
                         insira uma área da construção

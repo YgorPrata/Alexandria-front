@@ -103,12 +103,25 @@ class Arte extends Component {
           <div className="col-md-12">
               {
                 (localStorage.getItem('username') !== null)  && (localStorage.getItem('username') === userName || localStorage.getItem('role') === 'admin') &&
-                  <DeleteButton onClick={() => this.deleteProduto(arte.id_prod, arte.titulo)}>
-                    <span>
-                      <MaterialIcon icon="delete" size={18} color="#fff" />
-                      deletar
+                <DeleteButton>
+                  <Link key={ arte.id_prod } to={{
+                    pathname: "editar/" + arte.categoria,
+                    paramsProduct: {
+                      id: arte.id_prod,
+                      categoria: arte.categoria,
+                    }
+                  }}>
+                    <span className="btn-create">
+                      <MaterialIcon icon="create" size={18} color="#272727" />
+                      editar
                     </span>
-                  </DeleteButton>
+                  </Link>
+
+                  <span onClick={() => this.deleteProduto(arte.id_prod, arte.titulo)}>
+                    <MaterialIcon icon="delete" size={18} color="#fff" />
+                    deletar
+                  </span>
+                </DeleteButton>
               }
             </div>
             <div className="col-md-3">

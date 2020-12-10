@@ -104,12 +104,25 @@ class Livro extends Component {
             <div className="col-md-12">
               {
                 localStorage.getItem('username') !== null  && (localStorage.getItem('username') === userName || localStorage.getItem('role') === 'admin') &&
-                  <DeleteButton onClick={() => this.deleteProduto(livro.id_prod, livro.titulo)}>
-                    <span>
-                      <MaterialIcon icon="delete" size={18} color="#fff" />
-                      deletar
+                <DeleteButton>
+                  <Link key={ livro.id_prod } to={{
+                    pathname: "editar/" + livro.categoria,
+                    paramsProduct: {
+                      id: livro.id_prod,
+                      categoria: livro.categoria,
+                    }
+                  }}>
+                    <span className="btn-create">
+                      <MaterialIcon icon="create" size={18} color="#272727" />
+                      editar
                     </span>
-                  </DeleteButton>
+                  </Link>
+
+                  <span onClick={() => this.deleteProduto(livro.id_prod, livro.titulo)}>
+                    <MaterialIcon icon="delete" size={18} color="#fff" />
+                    deletar
+                  </span>
+                </DeleteButton>
               }
             </div>
             <div className="col-md-3">
